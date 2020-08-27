@@ -11,7 +11,9 @@
           <home-aside></home-aside>
         </el-aside>
         <!-- 主体内容区域 -->
-        <el-main>Main</el-main>
+        <el-main>
+          <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
   </div>
@@ -30,6 +32,5 @@ export default {
 .home {
   width: 100%;
   height: 100%;
- 
 }
 </style>

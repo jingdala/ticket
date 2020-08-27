@@ -12,7 +12,6 @@
       >
         <el-form-item></el-form-item>
         <!-- 账号区域 -->
-
         <el-form-item prop="userName">
           <el-input
             v-model="loginForm.userName"
@@ -48,10 +47,8 @@ export default {
   data() {
     return {
       loginForm: {
-        data2: 2,
         userName: "",
         userPwd: "",
-        data: 1,
       },
       rules: {
         userName: [

@@ -1,56 +1,73 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Login from '../views/login/Login.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Login from "../views/login/Login.vue";
 
-
-const originalPush = VueRouter.prototype.push
+const originalPush = VueRouter.prototype.push;
 VueRouter.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch(err => err)
-}
+  return originalPush.call(this, location).catch((err) => err);
+};
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
+    path: "/",
     redirect: "/login",
   },
   {
-    path: '/login',
-    component: Login
+    path: "/login",
+    component: Login,
   },
   {
-    path: '/home',
+    path: "/",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/home/Home.vue'),
-    redirect: "/regshow", children: [
-      { path: '/regshow', component: () => import(/* webpackChunkName: "about" */ '../components/regshow/RegShow.vue') },
-      { path: '/tempshow', component: () => import(/* webpackChunkName: "about" */ '../components/tempshow/TempShow.vue') },
-      { path: '/temptype', component: () => import(/* webpackChunkName: "about" */ '../components/temptype/TempType.vue'), }
-    ]
-  }
-]
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/home/Home.vue"),
+    redirect: "/exhibition/conventional",
+    children: [
+      {
+        path: "/exhibition/conventional",
+        component: () =>
+          import(
+            /* webpackChunkName: "about" */ "../views/exhibition/conventional"
+          ),
+      },
+      {
+        path: "/exhibition/temporary",
+        component: () =>
+          import(
+            /* webpackChunkName: "about" */ "../views/exhibition/temporary"
+          ),
+      },
+      {
+        path: "/exhibition/temporaryType",
+        component: () =>
+          import(
+            /* webpackChunkName: "about" */ "../views/exhibition/temporaryType"
+          ),
+      },
+    ],
+  },
+];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 // 挂载路由导航守卫
 router.beforeEach((to, from, next) => {
   // to 将要访问的路径
   // from 代表从哪个路径跳转而来
   // next 是一个函数，表示放行
   //     next()  放行    next('/login')  强制跳转
+  // if (to.path === "/login") return next();
+  // // 获取token
+  // const tokenStr = window.sessionStorage.getItem("token");
+  // if (!tokenStr) return next("/login");
+  next();
+});
 
-  if (to.path === '/login') return next()
-  // 获取token
-  const tokenStr = window.sessionStorage.getItem('token')
-  if (!tokenStr) return next('/login')
-  next()
-})
-
-
-export default router
+export default router;
