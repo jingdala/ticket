@@ -29,3 +29,19 @@ img {
 .el-aside {
   background-color: rgb(84, 93, 100);
 }
+
+.el-main {
+  padding-top: 0;
+}
+
+.el-card {
+  margin-top: 20px;
+  margin-bottom: 80px;
+}
+
+.el-breadcrumb {
+  border-bottom: 1px solid #e5e5e5;
+  height: 53px;
+  line-height: 53px;
+  padding-left: 20px;
+}

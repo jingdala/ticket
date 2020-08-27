@@ -16,7 +16,7 @@
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item>
-          <el-button type="danger" class="btn" size="small" @click="loginClick(loginForm)">登录</el-button>
+          <el-button type="primary" class="btn" size="small" @click="loginClick(loginForm)">登录</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -64,7 +64,9 @@ export default {
       this.$refs.loginFormRef.validate((valid) => {
         if (valid) {
           API.userlogin(this.loginForm).then((res) => {
-            if (res.data.msg !== 200) return this.$message.error("登录失败！");
+            console.log(res.data.msg);
+            console.log(res);
+            if (res.status !== 200) return this.$message.error("登录失败！");
             this.$message.success("登录成功");
             window.sessionStorage.setItem("username", this.loginForm.userName);
             window.sessionStorage.setItem("password", this.loginForm.userPwd);

@@ -135,6 +135,7 @@ export default {
           this.$router.push("/login");
           window.sessionStorage.removeItem("username");
           window.sessionStorage.removeItem("password");
+          window.sessionStorage.removeItem("token");
           this.$message({
             type: "success",
             message: "已确认退出!",
@@ -152,9 +153,11 @@ export default {
       this.setupdialogVisible = true;
       console.log("点击了");
     },
+    // 退出清空表单
     editDialogClosed() {
       this.$refs.ruleForm.resetFields();
     },
+    // 点击确定保存数据
     confirmSave(ruleForm) {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {

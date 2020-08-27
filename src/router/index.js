@@ -25,10 +25,10 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/home/Home.vue'),
-    redirect: "/regshow", children: [
-      { path: '/regshow', component: () => import(/* webpackChunkName: "about" */ '../components/regshow/RegShow.vue') },
-      { path: '/tempshow', component: () => import(/* webpackChunkName: "about" */ '../components/tempshow/TempShow.vue') },
-      { path: '/temptype', component: () => import(/* webpackChunkName: "about" */ '../components/temptype/TempType.vue'), }
+    children: [
+      { path: '/list', component: () => import('../views/users/userList') },
+      { path: '/rights', component: () => import('../views/users/userRights') },
+      { path: '/edit', component: () => import('../views/users/editRole'), }
     ]
   }
 ]
