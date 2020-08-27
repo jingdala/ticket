@@ -57,13 +57,7 @@
       </div>
     </el-form>
 
-    <el-table
-      v-loading="listLoading"
-      :data="list"
-      fit
-      highlight-current-row
-      style="width: 100%;"
-    >
+    <el-table :data="list" fit highlight-current-row style="width: 100%;">
       <el-table-column
         label="序号"
         prop="id"

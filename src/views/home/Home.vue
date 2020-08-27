@@ -13,7 +13,9 @@
         <!-- 主体内容区域 -->
         <el-main>
           <breadcrumb />
-          <router-view></router-view>
+          <div id="content" class="content">
+            <router-view></router-view>
+          </div>
         </el-main>
       </el-container>
     </el-container>
@@ -34,5 +36,13 @@ export default {
 .home {
   width: 100%;
   height: 100%;
+  background: #f5f5f5;
+}
+.content {
+  height: calc(100vh - 135px);
+  overflow-y: auto;
+  background: #fff;
+  padding: 20px;
+  box-sizing: border-box;
 }
 </style>

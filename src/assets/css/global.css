@@ -40,8 +40,6 @@ img {
 }
 
 .el-breadcrumb {
-  border-bottom: 1px solid #e5e5e5;
-  height: 53px;
-  line-height: 53px;
-  padding-left: 20px;
+  height: 54px;
+  line-height: 54px;
 }
