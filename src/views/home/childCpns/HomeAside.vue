@@ -41,9 +41,9 @@ export default {
           title: " 展览管理",
           icon: "el-icon-ice-cream-square",
           children: [
-            { name: "常规展览", path: "" },
-            { name: "临时展览", path: "" },
-            { name: "临展类型", path: "" },
+            { name: "常规展览", path: "/exhibition/conventional" },
+            { name: "临时展览", path: "/exhibition/temporary" },
+            { name: "临展类型", path: "/exhibition/temporaryType" },
           ],
         },
         {
@@ -56,9 +56,9 @@ export default {
           title: "用户管理",
           icon: "el-icon-user",
           children: [
-            { name: "用户列表", path: "/list" },
-            { name: "角色权限", path: "/rights" },
-            { name: "编辑角色功能", path: "/edit" },
+            { name: "用户列表", path: "/users/userListst" },
+            { name: "角色权限", path: "/users/userRights" },
+            { name: "编辑角色功能", path: "/users/editRole" },
           ],
         },
         {
