@@ -28,9 +28,6 @@
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item>
-<<<<<<< HEAD
-          <el-button type="primary" class="btn" size="small" @click="loginClick(loginForm)">登录</el-button>
-=======
           <el-button
             type="danger"
             class="btn"
@@ -38,7 +35,6 @@
             @click="loginClick(loginForm)"
             >登录</el-button
           >
->>>>>>> 0d7be8d6273e510076cc30619d24cbe14a63bfe5
         </el-form-item>
       </el-form>
     </div>
