@@ -4,19 +4,38 @@
       <div class="title">
         <div class="text">预约平台后台管理系统</div>
       </div>
-      <el-form :model="loginForm" :rules="rules" ref="loginFormRef" label-width="0px">
+      <el-form
+        :model="loginForm"
+        :rules="rules"
+        ref="loginFormRef"
+        label-width="0px"
+      >
         <el-form-item></el-form-item>
         <!-- 账号区域 -->
+
         <el-form-item prop="userName">
-          <el-input v-model="loginForm.userName" placeholder="请输入账号"></el-input>
+          <el-input
+            v-model="loginForm.userName"
+            placeholder="请输入账号"
+          ></el-input>
         </el-form-item>
         <!-- 密码区域 -->
         <el-form-item prop="userPwd">
-          <el-input v-model="loginForm.userPwd" placeholder="请输入密码" type="password"></el-input>
+          <el-input
+            v-model="loginForm.userPwd"
+            placeholder="请输入密码"
+            type="password"
+          ></el-input>
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item>
-          <el-button type="danger" class="btn" size="small" @click="loginClick(loginForm)">登录</el-button>
+          <el-button
+            type="danger"
+            class="btn"
+            size="small"
+            @click="loginClick(loginForm)"
+            >登录</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -29,8 +48,10 @@ export default {
   data() {
     return {
       loginForm: {
+        data2: 2,
         userName: "",
         userPwd: "",
+        data: 1,
       },
       rules: {
         userName: [
