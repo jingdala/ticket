@@ -181,6 +181,7 @@ export default {
   background-color: rgb(191, 79, 77);
   display: flex;
   justify-content: space-between;
+ 
   .logo {
     margin-left: 40px;
     line-height: 60px;

@@ -24,6 +24,7 @@ img {
 
 .el-container {
   height: 100%;
+  overflow: hidden;
 }
 
 .el-aside {
