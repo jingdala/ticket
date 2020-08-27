@@ -12,6 +12,7 @@
         </el-aside>
         <!-- 主体内容区域 -->
         <el-main>
+          <breadcrumb />
           <router-view></router-view>
         </el-main>
       </el-container>
@@ -22,10 +23,11 @@
 <script>
 import HomeHead from "./childCpns/HomeHead";
 import HomeAside from "./childCpns/HomeAside";
+import Breadcrumb from "../../components/breadcrumb/Breadcrumb";
 export default {
   name: "Home",
   methods: {},
-  components: { HomeHead, HomeAside },
+  components: { HomeHead, HomeAside, Breadcrumb },
 };
 </script>
 <style lang="less" scoped>

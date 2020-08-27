@@ -19,24 +19,44 @@ const routes = [
     component: Login,
   },
   {
-    path: "/",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+    path: "/home",
+    meta: { title: "展览管理", icon: "tab" },
     component: () => import("../views/home/Home.vue"),
     redirect: "/exhibition/conventional",
     children: [
       {
+        meta: { title: "常规展览", icon: "" },
         path: "/exhibition/conventional",
         component: () => import("../views/exhibition/conventional"),
       },
       {
+        meta: { title: "临时展览", icon: "" },
         path: "/exhibition/temporary",
         component: () => import("../views/exhibition/temporary"),
       },
       {
+        meta: { title: "临展类型", icon: "" },
         path: "/exhibition/temporaryType",
         component: () => import("../views/exhibition/temporaryType"),
+      },
+    ],
+  },
+  {
+    path: "/users",
+    redirect: "/users/userList",
+    component: () => import("../views/home/Home.vue"),
+    children: [
+      {
+        path: "/users/userList",
+        component: () => import("../views/users/userList"),
+      },
+      {
+        path: "/users/userRights",
+        component: () => import("../views/users/userRights"),
+      },
+      {
+        path: "/users/editRole",
+        component: () => import("../views/users/editRole"),
       },
     ],
   },

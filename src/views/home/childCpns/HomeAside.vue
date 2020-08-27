@@ -41,24 +41,24 @@ export default {
           title: " 展览管理",
           icon: "el-icon-ice-cream-square",
           children: [
-            { name: "常规展览", path: "/1" },
-            { name: "临时展览", path: "/2" },
-            { name: "临展类型", path: "/3" },
+            { name: "常规展览", path: "" },
+            { name: "临时展览", path: "" },
+            { name: "临展类型", path: "" },
           ],
         },
         {
           title: "预约管理",
           icon: "el-icon-tickets",
           children: [],
-          path: "/3",
+          path: "",
         },
         {
           title: "用户管理",
           icon: "el-icon-user",
           children: [
-            { name: "用户列表", path: "" },
-            { name: "角色权限", path: "" },
-            { name: "编辑角色功能", path: "" },
+            { name: "用户列表", path: "/list" },
+            { name: "角色权限", path: "/rights" },
+            { name: "编辑角色功能", path: "/edit" },
           ],
         },
         {
@@ -83,7 +83,7 @@ export default {
           title: "日志管理",
           icon: "el-icon-folder-opened",
           children: [],
-          path: "/",
+          path: "",
         },
       ],
     };
@@ -99,5 +99,8 @@ export default {
 .aside {
   background-color: rgb(84, 93, 100);
   height: 100%;
+  .el-menu {
+    border-right: none;
+  }
 }
 </style>
