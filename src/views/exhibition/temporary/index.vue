@@ -201,3 +201,8 @@ export default {
   },
 };
 </script>
+
+<style lang="less" scope>
+.app-container {
+}
+</style>

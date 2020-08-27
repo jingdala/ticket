@@ -12,6 +12,7 @@
         </el-aside>
         <!-- 主体内容区域 -->
         <el-main>
+          <BackTop />
           <breadcrumb />
           <div id="content" class="content">
             <router-view></router-view>
@@ -25,11 +26,12 @@
 <script>
 import HomeHead from "./childCpns/HomeHead";
 import HomeAside from "./childCpns/HomeAside";
-import Breadcrumb from "../../components/breadcrumb/Breadcrumb";
+import Breadcrumb from "./childCpns/Breadcrumb";
+import BackTop from "../../components/BackTop";
 export default {
   name: "Home",
   methods: {},
-  components: { HomeHead, HomeAside, Breadcrumb },
+  components: { HomeHead, HomeAside, Breadcrumb, BackTop },
 };
 </script>
 <style lang="less" scoped>
