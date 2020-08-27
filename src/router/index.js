@@ -23,30 +23,20 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/home/Home.vue"),
+    component: () => import("../views/home/Home.vue"),
     redirect: "/exhibition/conventional",
     children: [
       {
         path: "/exhibition/conventional",
-        component: () =>
-          import(
-            /* webpackChunkName: "about" */ "../views/exhibition/conventional"
-          ),
+        component: () => import("../views/exhibition/conventional"),
       },
       {
         path: "/exhibition/temporary",
-        component: () =>
-          import(
-            /* webpackChunkName: "about" */ "../views/exhibition/temporary"
-          ),
+        component: () => import("../views/exhibition/temporary"),
       },
       {
         path: "/exhibition/temporaryType",
-        component: () =>
-          import(
-            /* webpackChunkName: "about" */ "../views/exhibition/temporaryType"
-          ),
+        component: () => import("../views/exhibition/temporaryType"),
       },
     ],
   },
@@ -63,10 +53,10 @@ router.beforeEach((to, from, next) => {
   // from 代表从哪个路径跳转而来
   // next 是一个函数，表示放行
   //     next()  放行    next('/login')  强制跳转
-  // if (to.path === "/login") return next();
-  // // 获取token
-  // const tokenStr = window.sessionStorage.getItem("token");
-  // if (!tokenStr) return next("/login");
+  if (to.path === "/login") return next();
+  // 获取token
+  const tokenStr = window.sessionStorage.getItem("token");
+  if (!tokenStr) return next("/login");
   next();
 });
 
