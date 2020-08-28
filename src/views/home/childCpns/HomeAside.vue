@@ -1,7 +1,7 @@
 <template>
   <div class="aside">
     <el-menu
-      :default-openeds="['1', '3']"
+      :default-openeds="['1']"
       background-color="rgb(84, 93, 100)"
       text-color="#fff"
       active-text-color="#2ef344"
@@ -50,13 +50,13 @@ export default {
           title: "预约管理",
           icon: "el-icon-tickets",
           children: [],
-          path: "",
+          path: "/orderManage/orderList",
         },
         {
           title: "用户管理",
           icon: "el-icon-user",
           children: [
-            { name: "用户列表", path: "/users/userListst" },
+            { name: "用户列表", path: "/users/userList" },
             { name: "角色权限", path: "/users/userRights" },
             { name: "编辑角色功能", path: "/users/editRole" },
           ],
@@ -65,25 +65,25 @@ export default {
           title: "设备管理",
           icon: "el-icon-s-platform",
           children: [
-            { name: "广告", path: "" },
-            { name: "检票管理", path: "" },
-            { name: "设备运行报告", path: "" },
+            { name: "广告", path: "/equipManage/advertisement" },
+            { name: "检票管理", path: "/equipManage/equipOperationReport" },
+            { name: "设备运行报告", path: "/equipManage/ticketCheckManage" },
           ],
         },
         {
           title: "数据分析",
           icon: "el-icon-s-data",
           children: [
-            { name: "常规统计", path: "" },
-            { name: "多次到访", path: "" },
-            { name: "场次统计", path: "" },
+            { name: "常规统计", path: "/dataAnalysis/commonCount" },
+            { name: "多次到访", path: "/dataAnalysis/manyVisits" },
+            { name: "场次统计", path: "/dataAnalysis/sceneCount" },
           ],
         },
         {
           title: "日志管理",
           icon: "el-icon-folder-opened",
           children: [],
-          path: "",
+          path: "/logManage/logList",
         },
       ],
     };

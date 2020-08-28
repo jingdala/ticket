@@ -42,22 +42,98 @@ const routes = [
     ],
   },
   {
+    path: "/orderManage",
+    meta: { title: "预约管理", icon: "tab" },
+    component: () => import("../views/home/Home.vue"),
+    redirect: "/orderManage/orderList",
+    children: [
+      {
+        meta: { title: "预约列表", icon: "" },
+        path: "/orderManage/orderList",
+        component: () => import("../views/orderManage/orderList"),
+      },
+    ],
+  },
+  {
     path: "/users",
     redirect: "/users/userList",
+    meta: { title: "用户管理", icon: "" },
     component: () => import("../views/home/Home.vue"),
     children: [
       {
+        meta: { title: "角色列表", icon: "" },
         path: "/users/userList",
         component: () => import("../views/users/userList"),
       },
       {
+        meta: { title: "角色权限", icon: "" },
         path: "/users/userRights",
         component: () => import("../views/users/userRights"),
       },
       {
+        meta: { title: "编辑角色功能", icon: "" },
         path: "/users/editRole",
         component: () => import("../views/users/editRole"),
       },
+    ],
+  },
+  {
+    path: "/equipManage",
+    redirect: "/equipManage/advertisement",
+    meta: { title: "设备管理", icon: "tab" },
+    component: () => import("../views/home/Home.vue"),
+    children: [
+      {
+        meta: { title: "广告", icon: "" },
+        path: "/equipManage/advertisement",
+        component: () => import("../views/equipManage/advertisement"),
+      },
+      {
+        meta: { title: "检票管理", icon: "" },
+        path: "/equipManage/equipOperationReport",
+        component: () => import("../views/equipManage/equipOperationReport"),
+      },
+      {
+        meta: { title: "设备运行报告", icon: "" },
+        path: "/equipManage/ticketCheckManage",
+        component: () => import("../views/equipManage/ticketCheckManage"),
+      },
+    ],
+  },
+  {
+    path: "/dataAnalysis",
+    redirect: "/dataAnalysis/commonCount",
+    meta: { title: "数据分析", icon: "tab" },
+    component: () => import("../views/home/Home.vue"),
+    children: [
+      {
+        meta: { title: "常规统计", icon: "" },
+        path: "/dataAnalysis/commonCount",
+        component: () => import("../views/dataAnalysis/commonCount"),
+      },
+      {
+        meta: { title: "多次到访", icon: "" },
+        path: "/dataAnalysis/manyVisits",
+        component: () => import("../views/dataAnalysis/manyVisits"),
+      },
+      {
+        meta: { title: "场次统计", icon: "" },
+        path: "/dataAnalysis/sceneCount",
+        component: () => import("../views/dataAnalysis/sceneCount"),
+      },
+    ],
+  },
+  {
+    path: "/logManage",
+    redirect: "/logManage/logList",
+    meta: { title: "日志管理", icon: "tab" },
+    component: () => import("../views/home/Home.vue"),
+    children: [
+      {
+        meta: { title: "日志列表", icon: "" },
+        path: "/logManage/logList",
+        component: () => import("../views/logManage/logList"),
+      }
     ],
   },
 ];

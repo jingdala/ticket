@@ -13,11 +13,11 @@
         <el-table-column label="排序" width="150" type="index"></el-table-column>
         <el-table-column prop="date" label="创建时间" style="width:20%"></el-table-column>
         <el-table-column label="操作" style="width:20%">
-          <template>
+          <template slot-scope="scope">
             <!-- 修改按钮 -->
-            <el-button size="mini">编辑</el-button>
+            <el-button size="mini" @click="addClick">编辑</el-button>
             <!-- 删除按钮 -->
-            <el-button type="danger" size="mini">删除</el-button>
+            <el-button type="danger" size="mini" @click="removeUserById(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -48,7 +48,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="adddialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="adddialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="addfunc">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -60,6 +60,7 @@ export default {
       // 表格数据列表
       editRoleList: [
         {
+          id: 1,
           name: "常规展览",
           function: "查看",
           date: "	2020-02-25 18:57:47",
@@ -144,13 +145,51 @@ export default {
       ],
     };
   },
+  created() {
+    this.geteditRoleList();
+  },
   methods: {
+    // 获取数据列表
+    geteditRoleList() {},
     // 点击新增
     addClick() {
       this.adddialogVisible = true;
     },
+    // 对话框关闭
     handleClose() {
       this.$refs.ruleForm.resetFields();
+    },
+    // 通过id删除数据列表数据
+    async removeUserById(id) {
+      const confirmResult = await this.$confirm(
+        "此操作将永久删除该数据, 是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        }
+      ).catch((err) => err);
+
+      if (confirmResult !== "confirm") {
+        return this.$message.info("已取消删除");
+      }
+      this.$message.success("删除成功！");
+      this.geteditRoleList();
+    },
+    // 点击按钮，添加新功能
+    addfunc() {
+      this.$refs.addFormRef.validate(async (valid) => {
+        if (!valid) return;
+        if (res.meta.status !== 200) {
+          this.$message.error("添加/修改功能失败！");
+        }
+
+        // 隐藏添加用户的对话框
+        this.adddialogVisible = false;
+        this.geteditRoleList();
+        this.$message.success("添加/修改功能成功！");
+      });
     },
   },
 };
