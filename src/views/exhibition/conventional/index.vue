@@ -1,17 +1,9 @@
 <template>
   <div class="app-container">
-    <el-form
-      :inline="true"
-      :model="searchForm"
-      ref="searchFormRef"
-      label-width="80px"
-    >
+    <el-form :inline="true" :model="searchForm" ref="searchFormRef" label-width="80px">
       <div>
         <el-form-item label="临展票务">
-          <el-input
-            v-model="searchForm.ticketName"
-            placeholder="请输入门票名称"
-          ></el-input>
+          <el-input v-model="searchForm.ticketName" placeholder="请输入门票名称"></el-input>
         </el-form-item>
         <el-form-item label="开放时间">
           <el-date-picker
@@ -20,8 +12,7 @@
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
-          >
-          </el-date-picker>
+          ></el-date-picker>
         </el-form-item>
         <el-form-item label="预售状态">
           <el-select v-model="searchForm.saleStatus" placeholder="请选择">
@@ -30,47 +21,26 @@
               :key="item.value"
               :label="item.label"
               :value="item.value"
-            >
-            </el-option>
+            ></el-option>
           </el-select>
         </el-form-item>
       </div>
       <div style="text-align: right;">
         <!-- 按钮区域 -->
         <el-form-item>
-          <el-button type="primary" class="btn" size="small" @click="getList()"
-            >查询</el-button
-          >
+          <el-button type="primary" class="btn" size="small" @click="getList()">查询</el-button>
         </el-form-item>
         <el-form-item>
           <el-button class="btn" size="small" @click="reset()">重置</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            class="btn"
-            size="small"
-            @click="handleCreate()"
-            >新增临展</el-button
-          >
+          <el-button type="primary" class="btn" size="small" @click="handleCreate()">新增临展</el-button>
         </el-form-item>
       </div>
     </el-form>
 
-    <el-table
-      v-loading="listLoading"
-      :data="list"
-      fit
-      highlight-current-row
-      style="width: 100%;"
-    >
-      <el-table-column
-        label="序号"
-        prop="id"
-        sortable="custom"
-        align="center"
-        width="80"
-      >
+    <el-table :data="list" fit highlight-current-row style="width: 100%;">
+      <el-table-column label="序号" prop="id" sortable="custom" align="center" width="80">
         <template slot-scope="{ row }">
           <span>{{ row.id }}</span>
         </template>
@@ -116,23 +86,10 @@
         </template>
       </el-table-column>
 
-      <el-table-column
-        label="操作"
-        align="center"
-        width="100"
-        class-name="small-padding fixed-width"
-      >
+      <el-table-column label="操作" align="center" width="100" class-name="small-padding fixed-width">
         <template slot-scope="{ row, $index }">
-          <el-button type="primary" size="mini" @click="handleUpdate(row)">
-            查看
-          </el-button>
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(row, $index)"
-          >
-            删除
-          </el-button>
+          <el-button type="primary" size="mini" @click="handleUpdate(row)">查看</el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(row, $index)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -184,7 +141,7 @@ export default {
   },
   methods: {
     getList() {
-      this.listLoading = true;
+      // this.listLoading = true;
     },
     reset() {
       this.$nextTick(() => {

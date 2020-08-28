@@ -1,16 +1,14 @@
 <template>
   <div class="breadcrumb-box">
-    <span class="breadcrumb-icon"
-      ><i class="el-icon-location-outline"></i
-    ></span>
+    <span class="breadcrumb-icon">
+      <i class="el-icon-location-outline"></i>
+    </span>
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item v-for="(item, index) in levelList" :key="item.path">
         <span
           v-if="!item.redirect || index == levelList.length - 1"
           class="no-redirect"
-        >
-          {{ item.meta.title }}
-        </span>
+        >{{ item.meta.title }}</span>
         <a v-else @click.prevent="handleLink(item)">{{ item.meta.title }}</a>
       </el-breadcrumb-item>
     </el-breadcrumb>
@@ -47,6 +45,7 @@ export default {
     // 获取当前链接的路由层级
     getBreadcrumb() {
       // only show routes with meta.title
+      console.log(this.$route);
       let matched = this.$route.matched.filter(
         (item) => item.meta && item.meta.title
       );
