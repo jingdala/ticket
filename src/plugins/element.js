@@ -41,7 +41,13 @@ import {
   Timeline,
   TimelineItem,
   DatePicker,
+  TimePicker,
+  TimeSelect,
+  InputNumber,
+  Calendar,
 } from "element-ui";
+
+console.log(TimeSelect);
 
 // import Timeline from './timeline/index.js'
 // import TimelineItem from './timeline-item/index.js'
@@ -85,6 +91,9 @@ Vue.use(Timeline);
 Vue.use(MenuItemGroup);
 Vue.use(TimelineItem);
 Vue.use(DatePicker);
+Vue.use(TimePicker);
+Vue.use(InputNumber);
+Vue.use(Calendar);
 
 Vue.prototype.$message = Message;
 Vue.prototype.$confirm = MessageBox.confirm;
