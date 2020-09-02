@@ -3,11 +3,19 @@
     <!-- 编辑基础信息弹框 -->
     <el-dialog title="添加/修改票类信息" :visible.sync="dialogVisible">
       <el-form :model="form" :rules="rules">
-        <el-form-item label="票类名称" :label-width="formLabelWidth" prop="title">
+        <el-form-item
+          label="票类名称"
+          :label-width="formLabelWidth"
+          prop="title"
+        >
           <el-input v-model="form.title" style="width: 400px;"></el-input>
         </el-form-item>
         <el-form-item label="选择票类型" :label-width="formLabelWidth">
-          <el-select v-model="form.type" placeholder="请选择" style="width: 400px;">
+          <el-select
+            v-model="form.type"
+            placeholder="请选择"
+            style="width: 400px;"
+          >
             <el-option
               v-for="item in types"
               :key="item.value"
@@ -17,14 +25,21 @@
           </el-select>
         </el-form-item>
         <el-form-item label="票价" :label-width="formLabelWidth" prop="price">
-          <el-input v-model="form.price" type="number" style="width: 400px;"></el-input>
+          <el-input
+            v-model="form.price"
+            type="number"
+            style="width: 400px;"
+          ></el-input>
         </el-form-item>
-        <el-form-item label="开放票数" :label-width="formLabelWidth" prop="number">
+        <el-form-item
+          label="开放票数"
+          :label-width="formLabelWidth"
+          prop="number"
+        >
           <el-input-number
             v-model="form.number"
             :min="0"
             :max="1000"
-            label="描述文字"
             style="width: 400px;"
           ></el-input-number>
         </el-form-item>
@@ -87,5 +102,4 @@ export default {
   },
 };
 </script>
-<style lang="less">
-</style>
+<style lang="less"></style>

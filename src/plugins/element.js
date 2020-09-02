@@ -45,6 +45,8 @@ import {
   TimeSelect,
   InputNumber,
   Calendar,
+  Radio,
+  RadioGroup,
 } from "element-ui";
 
 console.log(TimeSelect);
@@ -94,6 +96,8 @@ Vue.use(DatePicker);
 Vue.use(TimePicker);
 Vue.use(InputNumber);
 Vue.use(Calendar);
+Vue.use(Radio);
+Vue.use(RadioGroup);
 
 Vue.prototype.$message = Message;
 Vue.prototype.$confirm = MessageBox.confirm;

@@ -1,14 +1,53 @@
+import splitPane from 'vue-splitpane';
 <template>
-  <div class="edit_basic">
-    <!-- 编辑基础信息弹框 -->
-    <el-dialog title="编辑基础信息" :visible.sync="dialogVisible">
+  <!-- 创建临时展览 -->
+  <div class="create_temporary">
+    <div class="header">
+      <h4><span>创建临时展览</span></h4>
+      <div>
+        <el-button type="primary">保存</el-button>
+      </div>
+    </div>
+    <div style="height:calc(100vh - 290px); overflow: auto;">
       <el-form :model="form" :rules="rules">
-        <el-form-item label="名称" :label-width="formLabelWidth" prop="name">
+        <el-form-item
+          label="票务名称"
+          :label-width="formLabelWidth"
+          prop="name"
+        >
           <el-input
             v-model="form.name"
             disabled
             style="width: 400px;"
           ></el-input>
+        </el-form-item>
+        <el-form-item
+          label="开放时间"
+          :label-width="formLabelWidth"
+          prop="openTime"
+        >
+          <el-date-picker
+            v-model="form.openTime"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          >
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item
+          label="预约开启时间"
+          :label-width="formLabelWidth"
+          prop="appointmentTime"
+        >
+          <el-date-picker
+            v-model="form.appointmentTime"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          >
+          </el-date-picker>
         </el-form-item>
         <el-form-item label="每日开馆时间" :label-width="formLabelWidth">
           <el-select
@@ -36,11 +75,48 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="地点" :label-width="formLabelWidth" prop="address">
+        <el-form-item
+          label="选择展品类型"
+          :label-width="formLabelWidth"
+          prop="exhibitionItemType"
+        >
+          <el-select
+            v-model="form.exhibitionItemType"
+            placeholder="请选择"
+            style="width: 400px;"
+          >
+            <el-option
+              v-for="item in exhibitionItemTypes"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="预约支持票类" :label-width="formLabelWidth">
+          <el-button>新增</el-button>
+        </el-form-item>
+        <el-form-item
+          label="每场预约票数"
+          :label-width="formLabelWidth"
+          prop="number"
+        >
+          <el-input-number
+            v-model="form.number"
+            :min="0"
+            :max="1000"
+            style="width: 400px;"
+          ></el-input-number>
+        </el-form-item>
+        <el-form-item
+          label="展览地点"
+          :label-width="formLabelWidth"
+          prop="address"
+        >
           <el-input v-model="form.address" style="width: 400px;"></el-input>
         </el-form-item>
         <el-form-item
-          label="举办方"
+          label="举办方信息"
           :label-width="formLabelWidth"
           prop="organizers"
         >
@@ -84,16 +160,30 @@
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
+        <el-form-item label="活动介绍" :label-width="formLabelWidth">
+          <div class="edit_container">
+            <quill-editor
+              v-model="form.content"
+              ref="myQuillEditor"
+              :options="editorOption"
+              @blur="onEditorBlur($event)"
+              @focus="onEditorFocus($event)"
+              @change="onEditorChange($event)"
+            >
+            </quill-editor>
+          </div>
+        </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="handleDialogVisible">取 消</el-button>
-        <el-button type="primary" @click="handleDialogVisible">确 定</el-button>
-      </div>
-    </el-dialog>
+    </div>
   </div>
 </template>
 
 <script>
+import { quillEditor } from "vue-quill-editor"; //调用编辑器
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
+import "quill/dist/quill.bubble.css";
+
 const times = [
   { value: "9:00" },
   { value: "9:30" },
@@ -116,17 +206,26 @@ const times = [
   { value: "18:00" },
 ];
 
+const exhibitionItemTypes = [
+  { label: "陶器", value: 0 },
+  { label: "画展", value: 1 },
+];
+
 export default {
   name: "EditBasic",
-  components: {},
+  components: { quillEditor },
   filters: {},
   data() {
     return {
-      dialogVisible: false,
       form: {
         name: "常规展览",
+        openTime: "",
+        appointmentTime: "",
         date1: "9:00",
         date2: "18:00",
+        exhibitionItemType: "",
+        ticketTypes: [],
+        number: 1,
         address: "",
         organizers: "",
         otherList: [
@@ -135,10 +234,23 @@ export default {
           },
         ],
         imageUrl: "",
+        content: `使用`,
       },
       rules: {
         name: [{ required: true, message: "请输入名称", trigger: "blur" }],
         address: [{ required: true, message: "请输入地址", trigger: "blur" }],
+        openTime: [
+          { required: true, message: "请选择开放日期", trigger: "change" },
+        ],
+        appointmentTime: [
+          { required: true, message: "请选择预约日期", trigger: "change" },
+        ],
+        exhibitionItemType: [
+          { required: true, message: "请选择展品类型", trigger: "change" },
+        ],
+        number: [
+          { required: true, message: "请输入每场预约票数", trigger: "blur" },
+        ],
         organizers: [
           { required: true, message: "请输入举办方", trigger: "blur" },
         ],
@@ -146,8 +258,11 @@ export default {
           { required: true, message: "请选择封面图片", trigger: "change" },
         ],
       },
-      formLabelWidth: "120px",
+      formLabelWidth: "140px",
       times: times,
+      exhibitionItemTypes: exhibitionItemTypes,
+      // 富文本编辑器参数
+      editorOption: {},
     };
   },
   created() {},
@@ -155,10 +270,6 @@ export default {
     /**
      * 功能函数 *
      */
-    // 监听弹框唤起
-    handleDialogVisible() {
-      this.dialogVisible = !this.dialogVisible;
-    },
     // 监听图片上传成功
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw);
@@ -185,10 +296,34 @@ export default {
       console.log(index);
       this.form.otherList.splice(index, 1);
     },
+    /**
+     * 编辑器相关方法
+     */
+    onEditorReady(editor) {
+      // 准备编辑器
+    },
+    onEditorBlur() {}, // 失去焦点事件
+    onEditorFocus() {}, // 获得焦点事件
+    onEditorChange() {}, // 内容改变事件
   },
 };
 </script>
 <style lang="less" scope>
+.create_temporary {
+  .header {
+    height: 50px;
+    line-height: 50px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #f3f3f3;
+  }
+  .ql-editor {
+    height: 360px;
+  }
+}
+
 .other_list {
   margin-bottom: 10px;
 }

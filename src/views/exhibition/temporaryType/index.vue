@@ -6,13 +6,7 @@
       >
     </div>
 
-    <el-table
-      v-loading="listLoading"
-      :data="list"
-      fit
-      highlight-current-row
-      style="width: 100%;"
-    >
+    <el-table :data="list" fit highlight-current-row style="width: 100%;">
       <el-table-column
         label="序号"
         prop="id"
@@ -63,22 +57,23 @@
       :size.sync="listQuery.size"
       @pagination="getList"
     />
+    <EditTemporaryType ref="editTemporaryType"></EditTemporaryType>
   </div>
 </template>
 
 <script>
 import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
+import EditTemporaryType from "./component/EditTemporaryType";
 
 export default {
   name: "ComplexTable",
-  components: { Pagination },
+  components: { Pagination, EditTemporaryType },
   filters: {},
   data() {
     return {
       tableKey: 0,
       total: 0,
       list: null,
-      listLoading: true,
       listQuery: {
         current: 1,
         size: 20,
@@ -102,15 +97,15 @@ export default {
     // this.getList();
   },
   methods: {
-    getList() {
-      this.listLoading = true;
-    },
+    getList() {},
     reset() {
       this.$nextTick(() => {
         this.$refs["searchFormRef"].clearValidate();
       });
     },
-    handleCreate() {},
+    handleCreate() {
+      this.$refs.editTemporaryType.handleDialogVisible();
+    },
     createData() {},
     handleUpdate(row) {},
     updateData() {},

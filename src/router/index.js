@@ -39,6 +39,11 @@ const routes = [
         path: "/exhibition/temporaryType",
         component: () => import("../views/exhibition/temporaryType"),
       },
+      {
+        meta: { title: "创建临时展览", icon: "" },
+        path: "/exhibition/createTemporary",
+        component: () => import("../views/exhibition/createTemporary"),
+      },
     ],
   },
   {
@@ -133,7 +138,7 @@ const routes = [
         meta: { title: "日志列表", icon: "" },
         path: "/logManage/logList",
         component: () => import("../views/logManage/logList"),
-      }
+      },
     ],
   },
 ];

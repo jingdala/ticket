@@ -177,6 +177,10 @@ export default {
     // this.getList();
   },
   methods: {
+    /**
+     * 功能函数 *
+     */
+
     getList() {
       this.listLoading = true;
     },
@@ -185,8 +189,9 @@ export default {
         this.$refs["searchFormRef"].clearValidate();
       });
     },
-    handleCreate() {},
-    createData() {},
+    handleCreate() {
+      this.$router.push({ path: "/exhibition/createTemporary" });
+    },
     handleUpdate(row) {},
     updateData() {},
     handleDelete(row, index) {
