@@ -88,21 +88,21 @@ const routes = [
     meta: { title: "设备管理", icon: "tab" },
     component: () => import("../views/home/Home.vue"),
     children: [
-      {
-        meta: { title: "广告", icon: "" },
-        path: "/equipManage/advertisement",
-        component: () => import("../views/equipManage/advertisement"),
-      },
+      // {
+      //   meta: { title: "广告", icon: "" },
+      //   path: "/equipManage/advertisement",
+      //   component: () => import("../views/equipManage/advertisement"),
+      // },
       {
         meta: { title: "检票管理", icon: "" },
         path: "/equipManage/equipOperationReport",
         component: () => import("../views/equipManage/equipOperationReport"),
       },
-      {
-        meta: { title: "设备运行报告", icon: "" },
-        path: "/equipManage/ticketCheckManage",
-        component: () => import("../views/equipManage/ticketCheckManage"),
-      },
+      // {
+      //   meta: { title: "设备运行报告", icon: "" },
+      //   path: "/equipManage/ticketCheckManage",
+      //   component: () => import("../views/equipManage/ticketCheckManage"),
+      // },
     ],
   },
   {
