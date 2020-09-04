@@ -7,13 +7,7 @@
     </div>
 
     <el-table :data="list" fit highlight-current-row style="width: 100%;">
-      <el-table-column
-        label="序号"
-        prop="id"
-        sortable="custom"
-        align="center"
-        width="80"
-      >
+      <el-table-column label="序号" prop="id" align="center" width="80">
         <template slot-scope="{ row }">
           <span>{{ row.id }}</span>
         </template>
@@ -64,6 +58,7 @@
 <script>
 import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
 import EditTemporaryType from "./component/EditTemporaryType";
+import * as API from "@/axios/api";
 
 export default {
   name: "ComplexTable",
@@ -94,10 +89,29 @@ export default {
     };
   },
   created() {
-    // this.getList();
+    this.getList();
   },
   methods: {
-    getList() {},
+    /**
+     * 获取数据 *
+     */
+    // 获取列表数据
+    getList() {
+      this.$myLoading();
+      API.GetTemporaryExhibitionTypeData().then((res) => {
+        console.log(res);
+        if (res.msg === "200") {
+          let data =
+            res.data &&
+            res.data.map((el, index) => {
+              el.index = index + 1;
+              return el;
+            });
+          this.list = data || [];
+        }
+        this.$myLoading().close();
+      });
+    },
     reset() {
       this.$nextTick(() => {
         this.$refs["searchFormRef"].clearValidate();

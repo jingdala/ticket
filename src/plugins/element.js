@@ -42,14 +42,12 @@ import {
   TimelineItem,
   DatePicker,
   TimePicker,
-  TimeSelect,
   InputNumber,
   Calendar,
   Radio,
   RadioGroup,
+  Loading,
 } from "element-ui";
-
-console.log(TimeSelect);
 
 // import Timeline from './timeline/index.js'
 // import TimelineItem from './timeline-item/index.js'
@@ -98,6 +96,16 @@ Vue.use(InputNumber);
 Vue.use(Calendar);
 Vue.use(Radio);
 Vue.use(RadioGroup);
+Vue.use(Loading);
 
 Vue.prototype.$message = Message;
 Vue.prototype.$confirm = MessageBox.confirm;
+Vue.prototype.$myLoading = () => {
+  // 设置默认加载样式
+  return Loading.service({
+    lock: true,
+    text: "Loading",
+    spinner: "el-icon-loading",
+    background: "rgba(0, 0, 0, 0.2)",
+  });
+};

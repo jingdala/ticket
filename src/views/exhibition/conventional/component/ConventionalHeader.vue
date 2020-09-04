@@ -91,7 +91,6 @@ export default {
       // 票务类型
       ticketTypes: [
         { id: 0, title: "团队票", type: "团队", price: 0, number: 0 },
-        { id: 1, title: "个人票", type: "个人", price: 0, number: 0 },
       ],
     };
   },

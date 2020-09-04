@@ -29,10 +29,11 @@
         <!-- 按钮区域 -->
         <el-form-item>
           <el-button
-            type="danger"
+            type="primary"
             class="btn"
             size="small"
             @click="loginClick(loginForm)"
+            :loading="loading"
             >登录</el-button
           >
         </el-form-item>
@@ -75,21 +76,24 @@ export default {
           },
         ],
       },
+      loading: false,
     };
   },
   methods: {
     loginClick(loginForm) {
       this.$refs.loginFormRef.validate((valid) => {
         if (valid) {
+          this.loading = true;
           API.userlogin(this.loginForm).then((res) => {
             console.log(res.data.msg);
             console.log(res);
             if (res.status !== 200) return this.$message.error("登录失败！");
             this.$message.success("登录成功");
-            window.sessionStorage.setItem("username", this.loginForm.userName);
-            window.sessionStorage.setItem("password", this.loginForm.userPwd);
+            // window.sessionStorage.setItem("username", this.loginForm.userName);
+            // window.sessionStorage.setItem("password", this.loginForm.userPwd);
             window.sessionStorage.setItem("token", res.data.data);
             this.$router.push("/home");
+            this.loading = false;
           });
         } else {
           this.$message.error("登录名或密码错误");
