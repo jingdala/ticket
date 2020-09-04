@@ -35,7 +35,6 @@ export default {
     },
   },
   created() {
-    console.log(this.$route);
     this.getBreadcrumb();
   },
   methods: {
@@ -45,7 +44,7 @@ export default {
     // 获取当前链接的路由层级
     getBreadcrumb() {
       // only show routes with meta.title
-      console.log(this.$route);
+
       let matched = this.$route.matched.filter(
         (item) => item.meta && item.meta.title
       );
@@ -53,7 +52,6 @@ export default {
       this.levelList = matched.filter(
         (item) => item.meta && item.meta.title && item.meta.breadcrumb !== false
       );
-      console.log(this.levelList);
     },
     // 解析地址
     pathCompile(path) {

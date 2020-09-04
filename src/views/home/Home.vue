@@ -41,10 +41,10 @@ export default {
   background: #f5f5f5;
 }
 .content {
-  height: calc(100vh - 135px);
   overflow-y: auto;
-  background: #fff;
-  padding: 20px;
+  height: calc(100vh - 135px);
+  background: #f0f2f5;
+  padding-top: 20px;
   box-sizing: border-box;
 }
 </style>
