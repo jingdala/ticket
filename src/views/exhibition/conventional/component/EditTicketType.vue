@@ -53,10 +53,7 @@
 </template>
 
 <script>
-const types = [
-  { label: "团队", value: 0 },
-  { label: "个人", value: 1 },
-];
+import * as API from "@/axios/api";
 
 export default {
   name: "EditTicketType",
@@ -80,11 +77,30 @@ export default {
         ],
       },
       formLabelWidth: "120px",
-      types: types,
+      types: [],
     };
   },
-  created() {},
+  created() {
+    this.getTicketTypeData();
+  },
   methods: {
+    /**
+     * 请求函数 *
+     */
+    // 获取票类型数据
+    getTicketTypeData() {
+      API.GetTickeTypeData().then((res) => {
+        if (res.msg === "200") {
+          let data =
+            res.data &&
+            res.data.map((el) => ({
+              label: el.ticketing_type_name,
+              value: el.ticketing_type_name,
+            }));
+          this.types = data || [];
+        }
+      });
+    },
     /**
      * 功能函数 *
      */
@@ -92,7 +108,6 @@ export default {
      * 监听弹框唤起
      * @param {object} item 票类参数
      */
-
     handleDialogVisible(item) {
       this.dialogVisible = !this.dialogVisible;
       if (item) {
