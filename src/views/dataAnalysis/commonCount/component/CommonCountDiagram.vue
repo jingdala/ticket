@@ -107,7 +107,6 @@ export default {
     right: 20px;
     top: 5px;
     // width: 92px;
-    height: 32px !important;
     .el-select {
       width: 92px;
       margin: 0 2px;
