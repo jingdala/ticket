@@ -10,20 +10,20 @@
         <el-submenu :index="index + ''" v-if="item.children.length > 0">
           <template slot="title">
             <i :class="item.icon"></i>
-            {{item.title}}
+            {{ item.title }}
           </template>
           <el-menu-item
             v-for="(item1, index1) in item.children"
             :key="index1"
             @click="itemClick(item1.path)"
           >
-            <template slot="title">{{item1.name}}</template>
+            <template slot="title">{{ item1.name }}</template>
           </el-menu-item>
         </el-submenu>
         <el-menu-item v-else @click="itemClick(item.path)">
           <template slot="title">
             <i :class="item.icon"></i>
-            {{item.title}}
+            {{ item.title }}
           </template>
         </el-menu-item>
       </div>
@@ -43,7 +43,7 @@ export default {
           children: [
             { name: "常规展览", path: "/exhibition/conventional" },
             { name: "临时展览", path: "/exhibition/temporary" },
-            { name: "临展类型", path: "/exhibition/temporaryType" },
+            { name: "展览类型", path: "/exhibition/temporaryType" },
           ],
         },
         {

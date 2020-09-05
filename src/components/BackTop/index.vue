@@ -30,7 +30,7 @@ export default {
     // 必须要等content容器加载完成后才初始化滚动监听
     contentOnScroll() {
       const $content = document.getElementById("content");
-      $content.onscroll = function(e) {
+      $content.onscroll = function (e) {
         //变量t是滚动条滚动时，距离顶部的距离
         const t = $content.scrollTop,
           height = window.screen.availHeight;
@@ -83,7 +83,7 @@ export default {
 
       // 滚动函数
       function scroll(docuTop, i) {
-        setTimeout(function() {
+        setTimeout(function () {
           if (diff > 0) {
             // 最后一次滚动的距离判定
             if (i < speedList.length) {
@@ -151,6 +151,7 @@ export default {
   font-size: 20px;
   cursor: pointer;
   opacity: 0.8;
+  z-index: 1000;
 
   &:active {
     opacity: 0.7;

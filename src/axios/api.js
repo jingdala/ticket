@@ -11,6 +11,57 @@ axios.defaults.baseURL = "/api";
 export const userlogin = (params) => {
   return axios.post("/SystemManager/GetUserToken?" + QS.stringify(params));
 };
+// 获取系统角色
+export const GetSystemRoleData = () => {
+  let tokens = getToken();
+  let paramsObj = { ...tokens };
+  return axios.get(
+    "/SystemManager/GetSystemRoleData?" + QS.stringify(paramsObj)
+  );
+};
+// 编辑系统角色
+export const EditSystemRoleData = (params) => {
+  let tokens = getToken();
+  let paramsObj = { ...params };
+  return axios.post(
+    "/SystemManager/EditSystemRoleData?" + QS.stringify(tokens),
+    paramsObj
+  );
+};
+// 新增系统角色
+export const InsertSystemRoleData = (params) => {
+  let tokens = getToken();
+  let paramsObj = { ...params };
+  return axios.post(
+    "/SystemManager/InsertSystemRoleData?" + QS.stringify(tokens),
+    paramsObj
+  );
+};
+// 获取用户操作系统权限
+export const GetLoginUserRoleAuthority = (params) => {
+  let tokens = getToken();
+  let paramsObj = { ...tokens, ...params };
+  return axios.get(
+    "/SystemManager/GetLoginUserRoleAuthority?" + QS.stringify(paramsObj)
+  );
+};
+// 获取系统权限配置数据
+export const GetSystemAuthorityData = () => {
+  let tokens = getToken();
+  let paramsObj = { ...tokens };
+  return axios.get(
+    "/SystemManager/GetSystemAuthorityData?" + QS.stringify(paramsObj)
+  );
+};
+// 新增角色权限
+export const InsertRolePermissionAssociation = (params) => {
+  let tokens = getToken();
+  let paramsObj = { ...params, ...tokens };
+  return axios.post(
+    "/SystemManager/InsertRolePermissionAssociation",
+    paramsObj
+  );
+};
 
 /**
  * 展览模块
@@ -26,27 +77,38 @@ export const GetTickeTypeData = (params = {}) => {
 // 新增展览类型
 export const InsertTemporaryExhibitionTypeData = (params = {}) => {
   let tokens = getToken();
-  let paramsObj = { ...params, ...tokens };
-  return axios.get(
+  let paramsObj = { ...params };
+  return axios.post(
     "/ExhibitionManagement/InsertTemporaryExhibitionTypeData?" +
-      QS.stringify(paramsObj)
+      QS.stringify(tokens),
+    paramsObj
   );
 };
 // 编辑展览类型
 export const UpdateTemporaryExhibitionTypeData = (params = {}) => {
   let tokens = getToken();
-  let paramsObj = { ...params, ...tokens };
-  return axios.get(
+  let paramsObj = { ...params };
+  return axios.post(
     "/ExhibitionManagement/UpdateTemporaryExhibitionTypeData?" +
-      QS.stringify(paramsObj)
+      QS.stringify(tokens),
+    paramsObj
   );
 };
-// 获取展览类型数据
+// 获取展览类型列表
 export const GetTemporaryExhibitionTypeData = (params = {}) => {
   let tokens = getToken();
   let paramsObj = { ...params, ...tokens };
   return axios.get(
     "/ExhibitionManagement/GetTemporaryExhibitionTypeData?" +
+      QS.stringify(paramsObj)
+  );
+};
+// 获取临时展览列表
+export const GetTemporaryExhibitionData = (params = {}) => {
+  let tokens = getToken();
+  let paramsObj = { ...params, ...tokens };
+  return axios.get(
+    "/ExhibitionManagement/GetTemporaryExhibitionData?" +
       QS.stringify(paramsObj)
   );
 };

@@ -2,31 +2,31 @@
   <div class="app-container">
     <div>
       <el-button type="primary" class="btn" size="small" @click="handleCreate()"
-        >+ 新增临展类型</el-button
+        >+ 新增展览类型</el-button
       >
     </div>
 
     <el-table :data="list" fit highlight-current-row style="width: 100%;">
       <el-table-column label="序号" prop="id" align="center" width="80">
         <template slot-scope="{ row }">
-          <span>{{ row.id }}</span>
+          <span>{{ row.index }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="临展类型" min-width="150px">
+      <el-table-column label="展览类型" min-width="150px">
         <template slot-scope="{ row }">
-          <span>{{ row.title }}</span>
+          <span>{{ row.temporary_exhibition_type_name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="创建时间" min-width="150px">
         <template slot-scope="{ row }">
-          <span>{{ row.title }}</span>
+          <span>{{ row.temporary_exhibition_type_addTime }}</span>
         </template>
       </el-table-column>
 
       <el-table-column
         label="操作"
         align="center"
-        width="100"
+        width="200"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="{ row, $index }">
@@ -51,7 +51,10 @@
       :size.sync="listQuery.size"
       @pagination="getList"
     />
-    <EditTemporaryType ref="editTemporaryType"></EditTemporaryType>
+    <EditTemporaryType
+      ref="editTemporaryType"
+      :getList="getList"
+    ></EditTemporaryType>
   </div>
 </template>
 
@@ -100,29 +103,28 @@ export default {
       this.$myLoading();
       API.GetTemporaryExhibitionTypeData().then((res) => {
         console.log(res);
-        if (res.msg === "200") {
-          let data =
-            res.data &&
-            res.data.map((el, index) => {
-              el.index = index + 1;
-              return el;
-            });
-          this.list = data || [];
+        if (res.data.msg === "200") {
+          let data = res.data.data.map((el, index) => {
+            el.index = index + 1;
+            return el;
+          });
+          this.list = data;
         }
         this.$myLoading().close();
       });
     },
-    reset() {
-      this.$nextTick(() => {
-        this.$refs["searchFormRef"].clearValidate();
-      });
-    },
+
+    /**
+     * 功能函数 *
+     */
+    // 新增展览类型
     handleCreate() {
       this.$refs.editTemporaryType.handleDialogVisible();
     },
-    createData() {},
-    handleUpdate(row) {},
-    updateData() {},
+    // 编辑展览类型
+    handleUpdate(row) {
+      this.$refs.editTemporaryType.handleDialogVisible(row);
+    },
     handleDelete(row, index) {
       this.$notify({
         title: "成功",

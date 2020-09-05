@@ -43,8 +43,8 @@ export default {
 .content {
   overflow-y: auto;
   height: calc(100vh - 135px);
-  background: #f0f2f5;
-  padding-top: 20px;
+  background: #fff;
+  padding: 20px;
   box-sizing: border-box;
 }
 </style>

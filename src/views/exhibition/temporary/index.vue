@@ -7,7 +7,7 @@
       label-width="80px"
     >
       <div>
-        <el-form-item label="临展票务">
+        <el-form-item label="展览票务">
           <el-input
             v-model="searchForm.ticketName"
             placeholder="请输入门票名称"
@@ -51,7 +51,7 @@
             class="btn"
             size="small"
             @click="handleCreate()"
-            >新增临展</el-button
+            >新增展览</el-button
           >
         </el-form-item>
       </div>
@@ -66,7 +66,7 @@
         width="80"
       >
         <template slot-scope="{ row }">
-          <span>{{ row.id }}</span>
+          <span>{{ row.index }}</span>
         </template>
       </el-table-column>
       <el-table-column label="票务名称" min-width="150px">
@@ -113,7 +113,7 @@
       <el-table-column
         label="操作"
         align="center"
-        width="100"
+        width="200"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="{ row, $index }">
@@ -143,6 +143,7 @@
 
 <script>
 import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
+import * as API from "@/axios/api";
 
 export default {
   name: "ComplexTable",
@@ -174,16 +175,32 @@ export default {
     };
   },
   created() {
-    // this.getList();
+    this.getList();
   },
   methods: {
     /**
+     * 获取数据 *
+     */
+    // 获取列表数据
+    getList() {
+      this.$myLoading();
+      API.GetTemporaryExhibitionData().then((res) => {
+        console.log(res);
+        if (res.data.msg === "200") {
+          let data = res.data.data.map((el, index) => {
+            el.index = index + 1;
+            return el;
+          });
+          this.list = data;
+          console.log(data);
+        }
+        this.$myLoading().close();
+      });
+    },
+    /**
      * 功能函数 *
      */
-
-    getList() {
-      this.listLoading = true;
-    },
+    // 重置搜索
     reset() {
       this.$nextTick(() => {
         this.$refs["searchFormRef"].clearValidate();

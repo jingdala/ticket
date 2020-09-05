@@ -35,7 +35,7 @@ const routes = [
         component: () => import("../views/exhibition/temporary"),
       },
       {
-        meta: { title: "临展类型", icon: "" },
+        meta: { title: "展览类型", icon: "" },
         path: "/exhibition/temporaryType",
         component: () => import("../views/exhibition/temporaryType"),
       },

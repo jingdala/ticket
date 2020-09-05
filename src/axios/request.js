@@ -1,18 +1,18 @@
-import axios from "axios"
+import axios from "axios";
 
 axios.interceptors.request.use(
-  config => {
-    config.headers.Authorization = window.sessionStorage.getItem('token')
+  (config) => {
+    // config.headers.Authorization = window.sessionStorage.getItem('token')
     return config;
   },
-  error => {
+  (error) => {
     return Promise.error(error);
   }
 );
 
 // http response 拦截器
 axios.interceptors.response.use(
-  response => {
+  (response) => {
     // 如果返回的状态码为200，说明接口请求成功，可以正常拿到数据
     // 否则的话抛出错误
     if (response.status === 200) {
@@ -21,7 +21,7 @@ axios.interceptors.response.use(
       return Promise.reject(response);
     }
   },
-  error => {
+  (error) => {
     return Promise.reject(error);
   }
 );

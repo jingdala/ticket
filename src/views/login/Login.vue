@@ -4,27 +4,15 @@
       <div class="title">
         <div class="text">预约平台后台管理系统</div>
       </div>
-      <el-form
-        :model="loginForm"
-        :rules="rules"
-        ref="loginFormRef"
-        label-width="0px"
-      >
+      <el-form :model="loginForm" :rules="rules" ref="loginFormRef" label-width="0px">
         <el-form-item></el-form-item>
         <!-- 账号区域 -->
         <el-form-item prop="userName">
-          <el-input
-            v-model="loginForm.userName"
-            placeholder="请输入账号"
-          ></el-input>
+          <el-input v-model="loginForm.userName" placeholder="请输入账号"></el-input>
         </el-form-item>
         <!-- 密码区域 -->
         <el-form-item prop="userPwd">
-          <el-input
-            v-model="loginForm.userPwd"
-            placeholder="请输入密码"
-            type="password"
-          ></el-input>
+          <el-input v-model="loginForm.userPwd" placeholder="请输入密码" type="password"></el-input>
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item>
@@ -34,8 +22,7 @@
             size="small"
             @click="loginClick(loginForm)"
             :loading="loading"
-            >登录</el-button
-          >
+          >登录</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -79,7 +66,11 @@ export default {
       loading: false,
     };
   },
+  mounted() {
+    this.keyLogin();
+  },
   methods: {
+    // 登录
     loginClick(loginForm) {
       this.$refs.loginFormRef.validate((valid) => {
         if (valid) {
@@ -100,6 +91,15 @@ export default {
           return false;
         }
       });
+    },
+    // 回车登录
+    keyLogin() {
+      document.onkeydown = (event) => {
+        if (event.keyCode == 13) {
+          //回车键的键值为13
+          this.loginClick();
+        }
+      };
     },
   },
 };
