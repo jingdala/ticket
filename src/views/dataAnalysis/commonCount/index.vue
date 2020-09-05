@@ -4,6 +4,7 @@
     <CommonCountDiagram></CommonCountDiagram>
     <CommonCountPieChart></CommonCountPieChart>
     <CommonCountColumn></CommonCountColumn>
+    <CommonCountBottom></CommonCountBottom>
   </div>
 </template>
 <script>
@@ -11,6 +12,7 @@ import CommonCountHeader from "./component/CommonCountHeader";
 import CommonCountDiagram from "./component/CommonCountDiagram";
 import CommonCountPieChart from "./component/CommonCountPieChart";
 import CommonCountColumn from "./component/CommonCountColumn";
+import CommonCountBottom from "./component/CommonCountBottom";
 // import echarts from "echarts";
 export default {
   data() {
@@ -23,6 +25,7 @@ export default {
     CommonCountDiagram,
     CommonCountPieChart,
     CommonCountColumn,
+    CommonCountBottom,
   },
 };
 </script>
