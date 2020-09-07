@@ -1,9 +1,20 @@
 <template>
   <div class="considerations">
     <!-- 注意事项form组件 -->
-    <div class="other_list" v-for="(item, index) in considerationsList" :key="index">
-      <el-input v-model="item.value" style="width: 400px;margin-right: 10px;"></el-input>
-      <el-button icon="el-icon-minus" @click="removeOtherItem(index)" v-if="index > 0"></el-button>
+    <div
+      class="other_list"
+      v-for="(item, index) in considerationsList"
+      :key="index"
+    >
+      <el-input
+        v-model="item.value"
+        style="width: 400px;margin-right: 10px;"
+      ></el-input>
+      <el-button
+        icon="el-icon-minus"
+        @click="removeOtherItem(index)"
+        v-if="index > 0"
+      ></el-button>
       <el-button
         icon="el-icon-plus"
         @click="addOtherItem"
@@ -31,7 +42,7 @@ export default {
     onchange: {
       type: Function,
     },
-    propsList: {
+    propsValue: {
       type: Object,
     },
   },
@@ -46,16 +57,18 @@ export default {
   },
   watch: {
     // 监听父组件的传值
-    propsList: {
+    propsValue: {
+      immediate: true,
       handler(newValue, oldValue) {
-        if (newValue === oldValue) {
+        // console.log(newValue);
+        if (newValue === oldValue || !newValue) {
           return;
         }
         let list = [];
         otherListArrt.forEach((el) => {
           if (newValue[el]) {
             list.push({
-              value: newValue[key],
+              value: newValue[el],
             });
           }
         });
@@ -66,10 +79,8 @@ export default {
     },
     // 深度监听数组类型的值变化
     considerationsList: {
+      deep: true,
       handler(newValue, oldValue) {
-        if (newValue === oldValue) {
-          return;
-        }
         let data = {};
         newValue.forEach((el, i) => {
           let key = otherListArrt[i];
@@ -77,14 +88,10 @@ export default {
         });
         this.onchange(data);
       },
-      deep: true,
     },
   },
+  mounted() {},
   methods: {
-    /**
-     * 请求函数 *
-     */
-
     /**
      * 功能函数 *
      */

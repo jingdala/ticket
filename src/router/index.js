@@ -71,7 +71,7 @@ const routes = [
         component: () => import("../views/users/userList"),
       },
       {
-        meta: { title: "角色权限", icon: "" },
+        meta: { title: "权限设置", icon: "" },
         path: "/users/userRights",
         component: () => import("../views/users/userRights"),
       },
@@ -115,6 +115,11 @@ const routes = [
         meta: { title: "场次统计", icon: "" },
         path: "/dataAnalysis/sceneCount",
         component: () => import("../views/dataAnalysis/sceneCount"),
+      },
+      {
+        meta: { title: "权限设置", icon: "" },
+        path: "/users/detail",
+        component: () => import("../views/dataAnalysis/manyVisits/component/details.vue"),
       },
     ],
   },

@@ -149,3 +149,19 @@ export const AddTemporaryExhibitionData = (params = {}) => {
     paramsObj
   );
 };
+
+/**
+ * 文件上传模块
+ */
+export const SystemFileUpload = (params) => {
+  let tokens = getToken();
+  let FormData = params;
+  let config = {
+    headers: { "Content-Type": "multipart/form-data" },
+  };
+  return axios.post(
+    "/FileManage/SystemFileUpload?" + QS.stringify(tokens),
+    FormData,
+    config
+  );
+};

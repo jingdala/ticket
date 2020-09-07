@@ -4,7 +4,11 @@
       <div class="left">
         <!-- 基础信息 -->
         <div class="basic_data">
-          <div class="basic_item" v-for="(item, index) in basicData" :key="index">
+          <div
+            class="basic_item"
+            v-for="(item, index) in basicData"
+            :key="index"
+          >
             <span class="label">{{ item.label }}：</span>
             <span class="value">{{ item.value }}</span>
           </div>
@@ -14,14 +18,21 @@
         </div>
         <div class="ticket_type">
           <span class="title">票类支持：</span>
-          <TicketTypeListForm :onchange="handleOnchange" :isEdit="isEdit"></TicketTypeListForm>
+          <TicketTypeListForm
+            :onchange="handleOnchange"
+            :isEdit="isEdit"
+          ></TicketTypeListForm>
         </div>
       </div>
       <div class="right">
         <!-- 编辑相关按钮 -->
-        <el-button type="primary" @click="setIsEdit(true)" v-if="!isEdit">编辑</el-button>
+        <el-button type="primary" @click="setIsEdit(true)" v-if="!isEdit"
+          >编辑</el-button
+        >
         <el-button v-if="isEdit" @click="setIsEdit(false)">退出</el-button>
-        <el-button type="primary" v-if="isEdit" @click="handleBatchOpen">批量开馆</el-button>
+        <el-button type="primary" v-if="isEdit" @click="handleBatchOpen"
+          >批量开馆</el-button
+        >
       </div>
     </div>
     <!-- 弹框 -->
@@ -52,6 +63,7 @@ export default {
   },
   computed: {
     ...mapState({
+      // 取得常规展览是否编辑状态
       isEdit: (state) => state.exhibition.isEdit,
     }),
   },
@@ -75,7 +87,6 @@ export default {
     handleOnchange(data) {
       console.log(data);
     },
-
     // 设置编辑状态
     setEditState(isEdit) {
       this.$store.commit({

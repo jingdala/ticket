@@ -8,7 +8,8 @@
         <span
           v-if="!item.redirect || index == levelList.length - 1"
           class="no-redirect"
-        >{{ item.meta.title }}</span>
+          >{{ item.meta.title }}</span
+        >
         <a v-else @click.prevent="handleLink(item)">{{ item.meta.title }}</a>
       </el-breadcrumb-item>
     </el-breadcrumb>
@@ -26,7 +27,7 @@ export default {
   },
   watch: {
     $route(route) {
-      console.log(route);
+      // console.log(route);
       // if you go to the redirect page, do not update the breadcrumbs
       if (route.path.startsWith("/redirect/")) {
         return;

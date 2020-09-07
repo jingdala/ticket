@@ -4,15 +4,27 @@
       <div class="title">
         <div class="text">预约平台后台管理系统</div>
       </div>
-      <el-form :model="loginForm" :rules="rules" ref="loginFormRef" label-width="0px">
+      <el-form
+        :model="loginForm"
+        :rules="rules"
+        ref="loginFormRef"
+        label-width="0px"
+      >
         <el-form-item></el-form-item>
         <!-- 账号区域 -->
         <el-form-item prop="userName">
-          <el-input v-model="loginForm.userName" placeholder="请输入账号"></el-input>
+          <el-input
+            v-model="loginForm.userName"
+            placeholder="请输入账号"
+          ></el-input>
         </el-form-item>
         <!-- 密码区域 -->
         <el-form-item prop="userPwd">
-          <el-input v-model="loginForm.userPwd" placeholder="请输入密码" type="password"></el-input>
+          <el-input
+            v-model="loginForm.userPwd"
+            placeholder="请输入密码"
+            type="password"
+          ></el-input>
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item>
@@ -22,7 +34,8 @@
             size="small"
             @click="loginClick(loginForm)"
             :loading="loading"
-          >登录</el-button>
+            >登录</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -78,7 +91,8 @@ export default {
           API.userlogin(this.loginForm).then((res) => {
             console.log(res.data.msg);
             console.log(res);
-            if (res.status !== 200) return this.$message.error("登录失败！");
+            if (res.data.msg !== "200")
+              return this.$message.error("登录失败！");
             this.$message.success("登录成功");
             // window.sessionStorage.setItem("username", this.loginForm.userName);
             // window.sessionStorage.setItem("password", this.loginForm.userPwd);

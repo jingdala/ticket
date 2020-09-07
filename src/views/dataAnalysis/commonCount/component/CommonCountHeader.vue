@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="warning_right">
-      预警数：{{ruleForm.count}}
+      预警数：{{count}}
       <el-button
         type="button"
         class="el-button el-button--default"
@@ -27,9 +27,7 @@
     <el-dialog title="修改预警值" :visible.sync="dialogVisible" width="50%" @closed="handleClose">
       <el-form :model="ruleForm" ref="ruleForm" label-width="50px" class="ruleForm">
         <el-form-item label="预警值" prop="count">
-          <el-button @click="subClick">-</el-button>
-          <el-input v-model="ruleForm.count"></el-input>
-          <el-button @click="addClick">+</el-button>
+          <el-input-number v-model="ruleForm.count" @change="handleChange" :min="1" :max="1500"></el-input-number>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -45,6 +43,7 @@ export default {
   name: "CommonCountHeader",
   data() {
     return {
+      count: 1000,
       number: 22,
       dialogVisible: false,
       ruleForm: {
@@ -59,16 +58,13 @@ export default {
     handleClose() {
       this.$refs.ruleForm.resetFields();
     },
-
-    addClick() {
-      count = this.ruleForm.count++;
-    },
-    subClick() {
-      count = this.ruleForm.count--;
+    handleChange(value) {
+      console.log(value);
+      this.count = value;
     },
     saveClick(ruleForm) {
-      console.log(count);
-      this.ruleForm.count = count;
+      // console.log(count);
+      // this.ruleForm.count = count;
       this.dialogVisible = false;
     },
   },

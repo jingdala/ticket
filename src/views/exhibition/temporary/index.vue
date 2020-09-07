@@ -1,11 +1,19 @@
 <template>
   <div class="app-container">
-    <el-form :inline="true" :model="searchForm" ref="searchFormRef" label-width="80px">
+    <el-form
+      :inline="true"
+      :model="searchForm"
+      ref="searchForm"
+      label-width="80px"
+    >
       <div>
-        <el-form-item label="展览票务">
-          <el-input v-model="searchForm.ticketName" placeholder="请输入门票名称"></el-input>
+        <el-form-item label="展览票务" prop="ticketName">
+          <el-input
+            v-model="searchForm.ticketName"
+            placeholder="请输入门票名称"
+          ></el-input>
         </el-form-item>
-        <el-form-item label="开放时间">
+        <el-form-item label="开放时间" prop="openTime">
           <el-date-picker
             v-model="searchForm.openTime"
             type="daterange"
@@ -14,7 +22,7 @@
             end-placeholder="结束日期"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="预售状态">
+        <el-form-item label="预售状态" prop="saleStatus">
           <el-select v-model="searchForm.saleStatus" placeholder="请选择">
             <el-option
               v-for="item in saleStatusList"
@@ -28,13 +36,21 @@
       <div style="text-align: right;">
         <!-- 按钮区域 -->
         <el-form-item>
-          <el-button type="primary" class="btn" size="small" @click="getList()">查询</el-button>
+          <el-button type="primary" class="btn" size="small" @click="getList()"
+            >查询</el-button
+          >
         </el-form-item>
         <el-form-item>
-          <el-button class="btn" size="small" @click="reset()">重置</el-button>
+          <el-button class="btn" size="small" @click="reset">重置</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="btn" size="small" @click="handleCreate()">新增展览</el-button>
+          <el-button
+            type="primary"
+            class="btn"
+            size="small"
+            @click="handleCreate()"
+            >新增展览</el-button
+          >
         </el-form-item>
       </div>
     </el-form>
@@ -86,10 +102,22 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" align="center" width="200" class-name="small-padding fixed-width">
+      <el-table-column
+        label="操作"
+        align="center"
+        width="200"
+        class-name="small-padding fixed-width"
+      >
         <template slot-scope="{ row, $index }">
-          <el-button type="primary" size="mini" @click="handleUpdate(row)">查看</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(row, $index)">删除</el-button>
+          <el-button type="primary" size="mini" @click="handleUpdate(row)"
+            >查看</el-button
+          >
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(row, $index)"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -155,7 +183,7 @@ export default {
             return el;
           });
           this.list = data;
-          this.total = res.data.total;
+          // this.total = res.data.total;
         }
         this.$myLoading().close();
       });
@@ -165,13 +193,26 @@ export default {
      */
     // 重置搜索
     reset() {
-      this.$nextTick(() => {
-        this.$refs["searchFormRef"].clearValidate();
-      });
+      this.$refs["searchForm"].resetFields();
     },
     // 创建展览
     handleCreate() {
       this.$router.push({ path: "/exhibition/createTemporary" });
+    },
+    // 查看/编辑 展览数据
+    handleUpdate(row) {
+      // 保存当前列临时展览详情数据
+      this.$store.commit({
+        type: "setTemporaryDetail",
+        temporaryDetail: row,
+      });
+      // 跳转到编辑页面
+      this.$router.push({
+        path: "/exhibition/createTemporary",
+        query: {
+          id: row.temporary_exhibition_code,
+        },
+      });
     },
     // 获取销售状态
     getSaleStatusText(value) {
@@ -181,8 +222,6 @@ export default {
       }
       return "";
     },
-    handleUpdate(row) {},
-    updateData() {},
     handleDelete(row, index) {
       this.$notify({
         title: "成功",

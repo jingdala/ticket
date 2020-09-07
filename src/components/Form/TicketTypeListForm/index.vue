@@ -1,19 +1,29 @@
 <template>
   <div class="ticket_type_list">
     <div v-if="!isEdit">
-      <div class="ticket_item" v-for="(item, index) in ticketTypes" :key="index">
+      <div
+        class="ticket_item"
+        v-for="(item, index) in ticketTypes"
+        :key="index"
+      >
         <span class="value">
-          {{ item.name }}（票价￥
-          <b>{{ item.price }}</b>，开放票数
-          <b>{{ item.number }}</b>，类型
-          <b>{{ item.type }}</b>）
+          {{ item.name }}（票价￥ <b>{{ item.price }}</b
+          >，开放票数 <b>{{ item.number }}</b
+          >，类型 <b>{{ item.type }}</b
+          >）
         </span>
       </div>
       <div v-if="ticketTypes.length === 0">暂无</div>
     </div>
     <div v-if="isEdit">
-      <div class="ticket_edit" v-for="(item, index) in ticketTypes" :key="index">
-        <el-button type="text" @click="handleEditTicketType(item)">编辑{{ item.name }}</el-button>
+      <div
+        class="ticket_edit"
+        v-for="(item, index) in ticketTypes"
+        :key="index"
+      >
+        <el-button type="text" @click="handleEditTicketType(item)"
+          >编辑{{ item.name }}</el-button
+        >
         <i class="el-icon-delete" @click="handleRemoveTicketType(index)"></i>
       </div>
       <div>
@@ -22,7 +32,10 @@
     </div>
 
     <!-- 弹框 -->
-    <EditTicketType ref="editTicketType" :onchange="handleOnchane"></EditTicketType>
+    <EditTicketType
+      ref="editTicketType"
+      :onchange="handleOnchane"
+    ></EditTicketType>
   </div>
 </template>
 
@@ -35,7 +48,9 @@ export default {
   props: {
     onchange: {
       type: Function,
-      required: false,
+    },
+    propsValue: {
+      type: Array,
     },
     // 是否为编辑模式
     isEdit: {
@@ -52,6 +67,46 @@ export default {
     };
   },
   computed: {},
+  watch: {
+    // 监听父组件的传值
+    propsValue: {
+      immediate: true,
+      handler(newValue, oldValue) {
+        console.log(newValue);
+        console.log(oldValue);
+        if (newValue === oldValue || !newValue) {
+          return;
+        }
+        console.log(newValue);
+        this.ticketTypes = newValue.map((el) => {
+          return {
+            id: el.ticket_information_code,
+            name: el.ticket_information_name,
+            type: el.ticket_type_code,
+            price: el.ticket_information_money,
+            number: el.number_child_tickets_open,
+          };
+        });
+      },
+    },
+    // 深度监听数组类型的值变化
+    ticketTypes: {
+      deep: true,
+      handler(newValue, oldValue) {
+        this.onchange(newValue);
+        let data = newValue.map((el) => {
+          return {
+            ticket_information_code: el.id, // 票类支持id
+            ticket_information_name: el.name, // 票类支持名称
+            ticket_type_code: el.type, // 票类型
+            ticket_information_money: el.price, // 票价
+            number_child_tickets_open: el.number, // 票数
+          };
+        });
+        this.onchange(data);
+      },
+    },
+  },
   methods: {
     /**
      * 请求函数 *
@@ -93,7 +148,7 @@ export default {
       })
         .then(() => {
           if (this.ticketTypes[index].id) {
-            this.deleteTicketTypeItem(this.ticketTypes[index].id, function () {
+            this.deleteTicketTypeItem(this.ticketTypes[index].id, function() {
               this.ticketTypes.splice(index, 1);
               this.$message.success("删除成功!");
             });
