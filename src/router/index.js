@@ -19,6 +19,10 @@ const routes = [
     component: Login,
   },
   {
+    path: "/test",
+    component: () => import("../views/test"),
+  },
+  {
     path: "/home",
     meta: { title: "展览管理", icon: "tab" },
     component: () => import("../views/home/Home.vue"),
@@ -119,7 +123,8 @@ const routes = [
       {
         meta: { title: "权限设置", icon: "" },
         path: "/users/detail",
-        component: () => import("../views/dataAnalysis/manyVisits/component/details.vue"),
+        component: () =>
+          import("../views/dataAnalysis/manyVisits/component/details.vue"),
       },
     ],
   },
