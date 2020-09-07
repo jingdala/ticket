@@ -3,11 +3,7 @@
     <!-- 编辑展览类型弹框 -->
     <el-dialog title="添加/修改展览类型" :visible.sync="dialogVisible">
       <el-form ref="formRef" :model="form" :rules="rules">
-        <el-form-item
-          label="展览类型"
-          :label-width="formLabelWidth"
-          prop="name"
-        >
+        <el-form-item label="展览类型" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.name" style="max-width: 400px;"></el-input>
         </el-form-item>
       </el-form>
@@ -51,8 +47,8 @@ export default {
     /**
      * 请求函数 *
      */
-    // 新增/编辑角色
-    addRole(params) {
+    // 新增/编辑展览类型
+    addData(params) {
       this.$myLoading();
       let request = this.isEdit
         ? API.UpdateTemporaryExhibitionTypeData
@@ -79,8 +75,7 @@ export default {
           if (this.isEdit) {
             params.temporary_exhibition_type_code = this.form.code;
           }
-          console.log(params);
-          this.addRole(params);
+          this.addData(params);
         }
       });
     },
@@ -91,7 +86,7 @@ export default {
     handleDialogVisible(item) {
       this.dialogVisible = !this.dialogVisible;
       this.isEdit = false;
-      if (item) {
+      if (item && this.dialogVisible) {
         this.isEdit = true;
         this.form = {
           name: item.temporary_exhibition_type_name,

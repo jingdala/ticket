@@ -76,7 +76,7 @@ export default {
 
     handleDialogVisible(item) {
       this.dialogVisible = !this.dialogVisible;
-      if (item) {
+      if (item && this.dialogVisible) {
         this.form = item;
       }
     },

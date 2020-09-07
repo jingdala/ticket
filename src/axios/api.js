@@ -56,9 +56,9 @@ export const GetSystemAuthorityData = () => {
 // 新增角色权限
 export const InsertRolePermissionAssociation = (params) => {
   let tokens = getToken();
-  let paramsObj = { ...params, ...tokens };
+  let paramsObj = params;
   return axios.post(
-    "/SystemManager/InsertRolePermissionAssociation",
+    "/SystemManager/InsertRolePermissionAssociation?" + QS.stringify(tokens),
     paramsObj
   );
 };
@@ -66,12 +66,40 @@ export const InsertRolePermissionAssociation = (params) => {
 /**
  * 展览模块
  */
-// 获取票类型
+// 获取票类支持
 export const GetTickeTypeData = (params = {}) => {
   let tokens = getToken();
   let paramsObj = { ...params, ...tokens };
   return axios.get(
     "/ExhibitionManagement/GetTickeTypeData?" + QS.stringify(paramsObj)
+  );
+};
+// 新增票类支持
+export const InsertTicketInformationTable = (params) => {
+  let tokens = getToken();
+  let paramsObj = { ...params };
+  return axios.post(
+    "/ExhibitionManagement/InsertTicketInformationTable?" +
+      QS.stringify(tokens),
+    paramsObj
+  );
+};
+// 编辑票类支持
+export const EditTicketInformationTable = (params) => {
+  let tokens = getToken();
+  let paramsObj = { ...params };
+  return axios.post(
+    "/ExhibitionManagement/EditTicketInformationTable?" + QS.stringify(tokens),
+    paramsObj
+  );
+};
+// 删除票类支持
+export const DeleteTicketInformationTable = (params) => {
+  let tokens = getToken();
+  let paramsObj = { ...params, ...tokens };
+  return axios.post(
+    "/ExhibitionManagement/DeleteTicketInformationTable?" +
+      QS.stringify(paramsObj)
   );
 };
 // 新增展览类型
@@ -110,5 +138,14 @@ export const GetTemporaryExhibitionData = (params = {}) => {
   return axios.get(
     "/ExhibitionManagement/GetTemporaryExhibitionData?" +
       QS.stringify(paramsObj)
+  );
+};
+// 新增临时展览
+export const AddTemporaryExhibitionData = (params = {}) => {
+  let tokens = getToken();
+  let paramsObj = { ...params };
+  return axios.post(
+    "/ExhibitionManagement/AddTemporaryExhibitionData?" + QS.stringify(tokens),
+    paramsObj
   );
 };

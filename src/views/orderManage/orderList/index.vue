@@ -1,17 +1,9 @@
 <template>
   <div class="app-container">
-    <el-form
-      :inline="true"
-      :model="searchForm"
-      ref="searchFormRef"
-      label-width="80px"
-    >
+    <el-form :inline="true" :model="searchForm" ref="searchFormRef" label-width="80px">
       <div>
         <el-form-item label="展览票务">
-          <el-input
-            v-model="searchForm.ticketName"
-            placeholder="请输入门票名称或ID"
-          ></el-input>
+          <el-input v-model="searchForm.ticketName" placeholder="请输入门票名称或ID"></el-input>
         </el-form-item>
         <el-form-item label="预约时间">
           <el-date-picker
@@ -36,9 +28,7 @@
       <div style="text-align: right;">
         <!-- 按钮区域 -->
         <el-form-item>
-          <el-button type="primary" class="btn" size="small" @click="getList()"
-            >查询</el-button
-          >
+          <el-button type="primary" class="btn" size="small" @click="getList()">查询</el-button>
         </el-form-item>
         <el-form-item>
           <el-button class="btn" size="small" @click="reset()">重置</el-button>
@@ -121,7 +111,7 @@
 </template>
 
 <script>
-import Pagination from "@/components/Pagination";
+import Pagination from "@/componentsCommon/Pagination";
 
 export default {
   name: "ComplexTable",

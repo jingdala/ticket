@@ -98,7 +98,7 @@
 </template>
 
 <script>
-import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
+import Pagination from "@/componentsCommon/Pagination"; // secondary package based on el-pagination
 
 export default {
   name: "ComplexTable",

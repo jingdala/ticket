@@ -1,17 +1,9 @@
 <template>
   <div class="app-container">
-    <el-form
-      :inline="true"
-      :model="searchForm"
-      ref="searchFormRef"
-      label-width="80px"
-    >
+    <el-form :inline="true" :model="searchForm" ref="searchFormRef" label-width="80px">
       <div>
         <el-form-item label="展览票务">
-          <el-input
-            v-model="searchForm.ticketName"
-            placeholder="请输入门票名称"
-          ></el-input>
+          <el-input v-model="searchForm.ticketName" placeholder="请输入门票名称"></el-input>
         </el-form-item>
         <el-form-item label="开放时间">
           <el-date-picker
@@ -20,8 +12,7 @@
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
-          >
-          </el-date-picker>
+          ></el-date-picker>
         </el-form-item>
         <el-form-item label="预售状态">
           <el-select v-model="searchForm.saleStatus" placeholder="请选择">
@@ -30,103 +21,75 @@
               :key="item.value"
               :label="item.label"
               :value="item.value"
-            >
-            </el-option>
+            ></el-option>
           </el-select>
         </el-form-item>
       </div>
       <div style="text-align: right;">
         <!-- 按钮区域 -->
         <el-form-item>
-          <el-button type="primary" class="btn" size="small" @click="getList()"
-            >查询</el-button
-          >
+          <el-button type="primary" class="btn" size="small" @click="getList()">查询</el-button>
         </el-form-item>
         <el-form-item>
           <el-button class="btn" size="small" @click="reset()">重置</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            class="btn"
-            size="small"
-            @click="handleCreate()"
-            >新增展览</el-button
-          >
+          <el-button type="primary" class="btn" size="small" @click="handleCreate()">新增展览</el-button>
         </el-form-item>
       </div>
     </el-form>
 
     <el-table :data="list" fit highlight-current-row style="width: 100%;">
-      <el-table-column
-        label="序号"
-        prop="id"
-        sortable="custom"
-        align="center"
-        width="80"
-      >
+      <el-table-column label="序号" prop="id" align="center" width="80">
         <template slot-scope="{ row }">
           <span>{{ row.index }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="票务名称" min-width="150px">
+      <el-table-column label="展览名称" min-width="150px">
         <template slot-scope="{ row }">
-          <span>{{ row.title }}</span>
+          <span>{{ row.temporary_exhibition_name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="总预售量" min-width="150px">
+      <el-table-column label="总预售票量" min-width="100px" align="center">
         <template slot-scope="{ row }">
-          <span>{{ row.title }}</span>
+          <span>{{ row.number_reservations }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="已预约数量" min-width="150px">
+      <el-table-column label="已预约数量" min-width="100px" align="center">
         <template slot-scope="{ row }">
-          <span>{{ row.title }}</span>
+          <span>{{ row.number_appointments }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="剩余数量" min-width="150px">
+      <el-table-column label="剩余数量" min-width="100px" align="center">
         <template slot-scope="{ row }">
-          <span>{{ row.title }}</span>
+          <span>{{ row.number_reservations - row.number_appointments }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="预售状态" min-width="150px">
+      <el-table-column label="预售状态" min-width="100px" align="center">
         <template slot-scope="{ row }">
-          <span>{{ row.title }}</span>
+          <span>{{ getSaleStatusText(row.temporary_exhibition_status) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="预约开启时间" min-width="150px">
+      <el-table-column label="预约开启时间" min-width="150px" align="center">
         <template slot-scope="{ row }">
-          <span>{{ row.title }}</span>
+          <span>{{ row.appointment_opening_time }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="展览开放时间" min-width="150px">
+      <el-table-column label="展览开放时间" min-width="150px" align="center">
         <template slot-scope="{ row }">
-          <span>{{ row.title }}</span>
+          <span>{{ row.temporary_opening_start_time }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" min-width="150px">
+      <el-table-column label="创建时间" min-width="150px" align="center">
         <template slot-scope="{ row }">
-          <span>{{ row.title }}</span>
+          <span>{{ row.temporary_exhibition_creationTime }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column
-        label="操作"
-        align="center"
-        width="200"
-        class-name="small-padding fixed-width"
-      >
+      <el-table-column label="操作" align="center" width="200" class-name="small-padding fixed-width">
         <template slot-scope="{ row, $index }">
-          <el-button type="primary" size="mini" @click="handleUpdate(row)">
-            查看
-          </el-button>
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(row, $index)"
-          >
-            删除
-          </el-button>
+          <el-button type="primary" size="mini" @click="handleUpdate(row)">查看</el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(row, $index)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -142,7 +105,7 @@
 </template>
 
 <script>
-import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
+import Pagination from "@/componentsCommon/Pagination"; // secondary package based on el-pagination
 import * as API from "@/axios/api";
 
 export default {
@@ -165,7 +128,7 @@ export default {
         openTime: "",
         saleStatus: "",
       },
-      // 预售状态列表
+      // 预售状态列表 1 未开始  2 预约中  3 已结束
       saleStatusList: [
         { value: "0", label: "全部" },
         { value: "1", label: "未开始" },
@@ -192,7 +155,7 @@ export default {
             return el;
           });
           this.list = data;
-          console.log(data);
+          this.total = res.data.total;
         }
         this.$myLoading().close();
       });
@@ -206,8 +169,17 @@ export default {
         this.$refs["searchFormRef"].clearValidate();
       });
     },
+    // 创建展览
     handleCreate() {
       this.$router.push({ path: "/exhibition/createTemporary" });
+    },
+    // 获取销售状态
+    getSaleStatusText(value) {
+      let list = this.saleStatusList.filter((el) => el.value === value);
+      if (list.length > 0) {
+        return list[0].label;
+      }
+      return "";
     },
     handleUpdate(row) {},
     updateData() {},

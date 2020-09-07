@@ -2,16 +2,16 @@
   <div class="edit_basic">
     <!-- 编辑角色权限弹框 -->
     <el-dialog title="编辑角色权限" :visible.sync="dialogVisible">
-      <div>
+      <div v-loading="loading">
         <el-tree
-          :data="data"
+          ref="tree"
+          :data="allPowers"
           show-checkbox
           node-key="id"
-          :default-expanded-keys="[2, 3]"
-          :default-checked-keys="[5]"
+          :default-expand-all="true"
+          :default-checked-keys="userPower"
           :props="defaultProps"
-        >
-        </el-tree>
+        ></el-tree>
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="handleDialogVisible">取 消</el-button>
@@ -35,94 +35,61 @@ export default {
   filters: {},
   data() {
     return {
-      data: [
-        {
-          id: 1,
-          label: "一级 1",
-          children: [
-            {
-              id: 4,
-              label: "二级 1-1",
-              children: [
-                {
-                  id: 9,
-                  label: "三级 1-1-1",
-                },
-                {
-                  id: 10,
-                  label: "三级 1-1-2",
-                },
-              ],
-            },
-          ],
-        },
-        {
-          id: 2,
-          label: "一级 2",
-          children: [
-            {
-              id: 5,
-              label: "二级 2-1",
-            },
-            {
-              id: 6,
-              label: "二级 2-2",
-            },
-          ],
-        },
-        {
-          id: 3,
-          label: "一级 3",
-          children: [
-            {
-              id: 7,
-              label: "二级 3-1",
-            },
-            {
-              id: 8,
-              label: "二级 3-2",
-            },
-          ],
-        },
-      ],
+      // 全部权限数据
+      allPowers: [],
+      // 当前用户权限
+      userPower: [],
+      // 当前用户code
+      userCode: "",
       defaultProps: {
         children: "children",
         label: "label",
       },
       dialogVisible: false,
       formLabelWidth: "120px",
+      loading: true,
     };
   },
-  created() {
-    this.getSystemPower();
-  },
+  created() {},
   methods: {
     /**
      * 请求函数 *
      */
     // 获取系统所有权限
     getSystemPower() {
+      this.loading = true;
       API.GetSystemAuthorityData().then((res) => {
-        console.log(res);
+        // console.log(res);
+        if (res.data.msg === "200") {
+          let list = this.formatPowerData(res.data.data);
+          this.allPowers = list;
+          this.getRolePower();
+        }
       });
     },
     // 获取角色的权限
     getRolePower() {
-      API.GetLoginUserRoleAuthority().then((res) => {
+      let params = { role_code: this.userCode };
+      API.GetLoginUserRoleAuthority(params).then((res) => {
         console.log(res);
+        if (res.data.msg === "200") {
+          let power = this.getItemPower(res.data.data);
+          this.userPower = power;
+        }
+        this.loading = false;
       });
     },
-    // 新增角色
-    addRole(params) {
-      this.$myLoading();
-      let request = API.InsertSystemRoleData;
-      request(params).then((res) => {
-        this.$myLoading().close();
+    // 编辑角色权限
+    editRolePower(params) {
+      this.loading = true;
+      API.InsertRolePermissionAssociation(params).then((res) => {
         if (res.data.msg === "200") {
-          console.log(res);
           this.handleDialogVisible();
-          this.getList();
+          this.$message.success("修改成功！");
+        } else {
+          this.$message.error("修改失败！");
         }
+        this.loading = false;
       });
     },
     /**
@@ -130,10 +97,12 @@ export default {
      */
     // 点击提交
     handleSubmit() {
-      this.$refs.formRef.validate((valid) => {
-        if (valid) {
-        }
-      });
+      let checkedPowers = this.$refs.tree.getCheckedKeys();
+      let params = checkedPowers.map((el) => ({
+        role_code: this.userCode,
+        permission_code: el,
+      }));
+      this.editRolePower(params);
     },
     /**
      * 监听弹框唤起
@@ -141,10 +110,50 @@ export default {
      */
     handleDialogVisible(item) {
       this.dialogVisible = !this.dialogVisible;
-      if (item) {
-        const { role_code } = item;
-        this.getRolePower({ role_code });
+      if (item && this.dialogVisible) {
+        this.userCode = item.role_code;
+        this.getSystemPower();
       }
+      if (!this.dialogVisible) {
+        this.allPowers = [];
+        this.userPower = [];
+        this.userCode = "";
+      }
+    },
+    /**
+     * 格式化系统权限数据
+     * @param {array} data 权限数据
+     */
+    formatPowerData(data) {
+      return data.map((el, index) => {
+        let item = {
+          id: el.code,
+          label: el.authority_name,
+        };
+        if (el.listSystemAuthorityTable) {
+          item.children = this.formatPowerData(el.listSystemAuthorityTable);
+        }
+        return item;
+      });
+    },
+    /**
+     * 获取当前用户的角色权限
+     * @param {array} data 权限数据
+     */
+    getItemPower(data) {
+      let power = [];
+      getPower(data);
+
+      function getPower(data) {
+        data.forEach((el, index) => {
+          if (el.listSystemAuthorityTable) {
+            getPower(el.listSystemAuthorityTable);
+          }
+          power.push(el.code);
+        });
+      }
+
+      return power;
     },
   },
 };

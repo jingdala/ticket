@@ -1,9 +1,7 @@
 <template>
   <div class="app-container">
     <div>
-      <el-button type="primary" class="btn" size="small" @click="handleCreate()"
-        >+ 新增展览类型</el-button
-      >
+      <el-button type="primary" class="btn" size="small" @click="handleCreate()">+ 新增展览类型</el-button>
     </div>
 
     <el-table :data="list" fit highlight-current-row style="width: 100%;">
@@ -23,23 +21,10 @@
         </template>
       </el-table-column>
 
-      <el-table-column
-        label="操作"
-        align="center"
-        width="200"
-        class-name="small-padding fixed-width"
-      >
+      <el-table-column label="操作" align="center" width="200" class-name="small-padding fixed-width">
         <template slot-scope="{ row, $index }">
-          <el-button type="primary" size="mini" @click="handleUpdate(row)">
-            编辑
-          </el-button>
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(row, $index)"
-          >
-            删除
-          </el-button>
+          <el-button type="primary" size="mini" @click="handleUpdate(row)">编辑</el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(row, $index)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -51,15 +36,12 @@
       :size.sync="listQuery.size"
       @pagination="getList"
     />
-    <EditTemporaryType
-      ref="editTemporaryType"
-      :getList="getList"
-    ></EditTemporaryType>
+    <EditTemporaryType ref="editTemporaryType" :getList="getList"></EditTemporaryType>
   </div>
 </template>
 
 <script>
-import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
+import Pagination from "@/componentsCommon/Pagination"; // secondary package based on el-pagination
 import EditTemporaryType from "./component/EditTemporaryType";
 import * as API from "@/axios/api";
 

@@ -103,4 +103,8 @@ export default {
     border-right: none;
   }
 }
+.el-submenu__title i,
+.el-menu-item i {
+  color: #fff;
+}
 </style>

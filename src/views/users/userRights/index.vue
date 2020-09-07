@@ -1,19 +1,9 @@
 <template>
   <div class="app-container">
-    <div
-      style="padding: 20px 0; margin-bottom: 20px;border-bottom: 1px solid #f5f5f5;"
-    >
+    <div style="padding: 20px 0; margin-bottom: 20px;border-bottom: 1px solid #f5f5f5;">
       <!-- 按钮区域 -->
-      <el-button type="primary" class="btn" size="small" @click="handleAddRole"
-        >+ 新增角色</el-button
-      >
-      <el-button
-        type="primary"
-        class="btn"
-        size="small"
-        @click="handleAddSystemAccount"
-        >+ 新增系统人员</el-button
-      >
+      <el-button type="primary" class="btn" size="small" @click="handleAddRole">+ 新增角色</el-button>
+      <el-button type="primary" class="btn" size="small" @click="handleAddSystemAccount">+ 新增系统人员</el-button>
     </div>
 
     <el-table :data="list" fit highlight-current-row style="width: 100%;">
@@ -33,23 +23,11 @@
         </template>
       </el-table-column>
 
-      <el-table-column
-        label="操作"
-        align="center"
-        width="500"
-        class-name="small-padding fixed-width"
-      >
+      <el-table-column label="操作" align="center" width="500" class-name="small-padding fixed-width">
         <template slot-scope="{ row, $index }">
-          <el-button size="mini" @click="handleEditRolePower(row)"
-            >编辑权限</el-button
-          >
+          <el-button size="mini" @click="handleEditRolePower(row)">编辑权限</el-button>
           <el-button size="mini" @click="handleUpdateRole(row)">编辑</el-button>
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(row, $index)"
-            >删除</el-button
-          >
+          <el-button size="mini" type="danger" @click="handleDelete(row, $index)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -63,12 +41,12 @@
     />
     <AddRole ref="addRole" :getList="getList"></AddRole>
     <AddSystemAccount ref="addSystemAccount"></AddSystemAccount>
-    <EditRolePower ref="editRolePower"></EditRolePower>
+    <EditRolePower ref="editRolePower" :getList="getList"></EditRolePower>
   </div>
 </template>
 
 <script>
-import Pagination from "@/components/Pagination"; // secondary package based on el-pagination
+import Pagination from "@/componentsCommon/Pagination"; // secondary package based on el-pagination
 import AddRole from "./component/AddRole";
 import AddSystemAccount from "./component/AddSystemAccount";
 import EditRolePower from "./component/EditRolePower";

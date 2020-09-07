@@ -3,18 +3,15 @@
     <!-- 编辑角色弹框 -->
     <el-dialog title="添加/修改系统人员" :visible.sync="dialogVisible">
       <el-form ref="formRef" :model="form" :rules="rules">
-        <el-form-item
-          label="角色名称"
-          :label-width="formLabelWidth"
-          prop="name"
-        >
+        <el-form-item label="角色名称" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.name" style="width: 400px;"></el-input>
         </el-form-item>
         <el-form-item label="编码" :label-width="formLabelWidth" prop="code">
-          <el-input v-model="form.code" style="width: 400px;"></el-input>
+          <el-input v-model="form.code" :disabled="this.isEdit" style="width: 400px;"></el-input>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+
+      <div slot="footer" class="dialog-footer" v-loading="loading">
         <el-button @click="handleDialogVisible">取 消</el-button>
         <el-button type="primary" @click="handleSubmit">确 定</el-button>
       </div>
@@ -47,6 +44,7 @@ export default {
       },
       formLabelWidth: "120px",
       isEdit: false,
+      loading: false,
     };
   },
   created() {},
@@ -56,12 +54,12 @@ export default {
      */
     // 新增/编辑角色
     addRole(params) {
-      this.$myLoading();
+      this.loading = true;
       let request = this.isEdit
         ? API.EditSystemRoleData
         : API.InsertSystemRoleData;
       request(params).then((res) => {
-        this.$myLoading().close();
+        this.loading = false;
         if (res.data.msg === "200") {
           console.log(res);
           this.handleDialogVisible();
@@ -91,7 +89,7 @@ export default {
     handleDialogVisible(item) {
       this.dialogVisible = !this.dialogVisible;
       this.isEdit = false;
-      if (item) {
+      if (item && this.dialogVisible) {
         this.isEdit = true;
         this.form = {
           name: item.role_name,

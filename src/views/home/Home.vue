@@ -27,7 +27,7 @@
 import HomeHead from "./childCpns/HomeHead";
 import HomeAside from "./childCpns/HomeAside";
 import Breadcrumb from "./childCpns/Breadcrumb";
-import BackTop from "../../components/BackTop";
+import BackTop from "@/componentsCommon/BackTop";
 export default {
   name: "Home",
   methods: {},

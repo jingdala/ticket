@@ -4,11 +4,7 @@
     <el-dialog title="编辑基础信息" :visible.sync="dialogVisible">
       <el-form :model="form" :rules="rules">
         <el-form-item label="名称" :label-width="formLabelWidth" prop="name">
-          <el-input
-            v-model="form.name"
-            disabled
-            style="width: 400px;"
-          ></el-input>
+          <el-input v-model="form.name" disabled style="width: 400px;"></el-input>
         </el-form-item>
         <el-form-item label="每日开馆时间" :label-width="formLabelWidth">
           <el-select
@@ -21,13 +17,9 @@
               :key="item.value"
               :label="item.value"
               :value="item.value"
-            ></el-option> </el-select
-          >至
-          <el-select
-            v-model="form.date2"
-            placeholder="请选择"
-            style="width: 180px;margin-left: 10px;"
-          >
+            ></el-option>
+          </el-select>至
+          <el-select v-model="form.date2" placeholder="请选择" style="width: 180px;margin-left: 10px;">
             <el-option
               v-for="item in times"
               :key="item.value"
@@ -39,40 +31,16 @@
         <el-form-item label="地点" :label-width="formLabelWidth" prop="address">
           <el-input v-model="form.address" style="width: 400px;"></el-input>
         </el-form-item>
-        <el-form-item
-          label="举办方"
-          :label-width="formLabelWidth"
-          prop="organizers"
-        >
+        <el-form-item label="举办方" :label-width="formLabelWidth" prop="organizers">
           <el-input v-model="form.organizers" style="width: 400px;"></el-input>
         </el-form-item>
         <el-form-item label="注意事项" :label-width="formLabelWidth">
-          <div
-            class="other_list"
-            v-for="(item, index) in form.otherList"
-            :key="index"
-          >
-            <el-input
-              v-model="item.value"
-              style="width: 400px;margin-right: 10px;"
-            ></el-input>
-            <el-button
-              icon="el-icon-minus"
-              @click="removeOtherItem(index)"
-              v-if="index > 0"
-            ></el-button>
-            <el-button
-              icon="el-icon-plus"
-              @click="addOtherItem"
-              v-if="index === 0 && form.otherList.length < 5"
-            ></el-button>
-          </div>
+          <ConsiderationsForm
+            :onchange="handleOnchangeConsiderations"
+            :propsList="form.considerations"
+          ></ConsiderationsForm>
         </el-form-item>
-        <el-form-item
-          label="封面图片"
-          :label-width="formLabelWidth"
-          prop="imageUrl"
-        >
+        <el-form-item label="封面图片" :label-width="formLabelWidth" prop="imageUrl">
           <el-upload
             class="avatar-uploader"
             action="https://jsonplaceholder.typicode.com/posts/"
@@ -94,31 +62,12 @@
 </template>
 
 <script>
-const times = [
-  { value: "9:00" },
-  { value: "9:30" },
-  { value: "10:00" },
-  { value: "10:30" },
-  { value: "11:00" },
-  { value: "11:30" },
-  { value: "12:00" },
-  { value: "12:30" },
-  { value: "13:00" },
-  { value: "13:30" },
-  { value: "14:00" },
-  { value: "14:30" },
-  { value: "15:00" },
-  { value: "15:30" },
-  { value: "16:00" },
-  { value: "16:30" },
-  { value: "17:00" },
-  { value: "17:30" },
-  { value: "18:00" },
-];
+import ConsiderationsForm from "@/components/Form/ConsiderationsForm";
+import { times } from "@/utils/data";
 
 export default {
   name: "EditBasic",
-  components: {},
+  components: { ConsiderationsForm },
   filters: {},
   data() {
     return {
@@ -129,11 +78,7 @@ export default {
         date2: "18:00",
         address: "",
         organizers: "",
-        otherList: [
-          {
-            value: "",
-          },
-        ],
+        considerations: {},
         imageUrl: "",
       },
       rules: {
@@ -176,22 +121,14 @@ export default {
       }
       return isJPG && isLt2M;
     },
-    // 添加注意事项
-    addOtherItem() {
-      this.form.otherList.push({ value: "" });
-    },
-    // 删除注意事项
-    removeOtherItem(index) {
-      console.log(index);
-      this.form.otherList.splice(index, 1);
+    // 监听获取注意事项
+    handleOnchangeConsiderations(data) {
+      this.form.considerations = data;
     },
   },
 };
 </script>
 <style lang="less" scope>
-.other_list {
-  margin-bottom: 10px;
-}
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
